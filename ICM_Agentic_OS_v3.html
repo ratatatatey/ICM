@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICM Intelligence — Agentic OS · Closing Workspace</title>
+<title>ICM Intelligence — Agentic OS</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -625,30 +625,13 @@
 </head>
 <body>
 
-<div class="login-overlay" id="loginOverlay">
-  <div class="login-box">
-    <div class="login-brand">Work&nbsp;Zero<span class="sep">×</span>ICM Intelligence</div>
-    <div class="login-tag">Agentic OS · Closing Workspace</div>
-    <div class="login-field">
-      <label class="login-label" for="loginUser">Benutzername</label>
-      <input class="login-input" id="loginUser" type="text" autocomplete="off" spellcheck="false">
-    </div>
-    <div class="login-field">
-      <label class="login-label" for="loginPass">Passwort</label>
-      <input class="login-input" id="loginPass" type="password" autocomplete="off">
-    </div>
-    <div class="login-error" id="loginError"></div>
-    <button class="login-btn" id="loginBtn">Zugang bestätigen</button>
-  </div>
-</div>
-
 <div class="frame">
 
   <!-- TOP BAR -->
   <div class="topbar">
     <div class="brand">
       <span class="brand-mark">Work&nbsp;Zero<span class="sep">×</span>ICM Intelligence</span>
-      <span class="brand-tag" id="brandTag">Agentic OS · Closing Workspace</span>
+      <span class="brand-tag" id="brandTag">Agentic OS</span>
     </div>
     <div class="lang-selector" id="langSelector">
       <button class="lang-btn active" data-lang="de">DE</button>
@@ -664,8 +647,8 @@
   <!-- TAB NAVIGATION -->
   <nav class="tabs" id="tabs">
     <button class="tab" data-view="reset">
-      <span class="tab-index" id="tabResetIndex">01 / The Reset</span>
-      <span class="tab-label" id="tabResetLabel">Der Upfront Contract</span>
+      <span class="tab-index" id="tabResetIndex">01 / Der Einstieg</span>
+      <span class="tab-label" id="tabResetLabel">Die Ausrichtung</span>
       <div class="tab-sub" id="tabResetSub">Minuten 0–5 · Den Rahmen setzen</div>
     </button>
     <button class="tab active" data-view="architecture">
@@ -675,7 +658,7 @@
     </button>
     <button class="tab" data-view="partnership">
       <span class="tab-index" id="tabPartnershipIndex">03 / The Partnership</span>
-      <span class="tab-label" id="tabPartnershipLabel">Das Closing</span>
+      <span class="tab-label" id="tabPartnershipLabel">Die Partnerschaft</span>
       <div class="tab-sub" id="tabPartnershipSub">Minuten 30–45 · Pricing & Risk Reversal</div>
     </button>
   </nav>
@@ -683,19 +666,19 @@
   <!-- ==================== VIEW 01: RESET ==================== -->
   <div class="view" id="view-reset">
     <div class="reset-stage">
-      <div class="reset-eyebrow" id="resetEyebrow">Upfront Contract · Min 00–05</div>
+      <div class="reset-eyebrow" id="resetEyebrow">Die Ausrichtung · Min 00–05</div>
       <h2 class="reset-headline" id="resetHeadline">Extreme Ownership. <span class="muted" id="resetHeadlineMuted">Klarheit vor jeder Zeile Code.</span></h2>
-      <p class="reset-sub" id="resetSub">Drei Säulen. Eine Vereinbarung. Bevor wir starten, einigen wir uns auf die Spielregeln der nächsten 45 Minuten.</p>
+      <p class="reset-sub" id="resetSub">Drei Säulen. Ein gemeinsamer Start. Bevor wir beginnen, stimmen wir uns gemeinsam auf den Ablauf der nächsten 45 Minuten ab.</p>
 
       <div class="reset-cards">
         <article class="glass-card">
-          <h3 id="card1Title">01 / Der Reset</h3>
-          <span class="glass-sub" id="card1Subtitle">Das Eingeständnis</span>
-          <p id="card1Text">Letztes Mal haben wir euch mit Tech-Details erschlagen. Das war unser Fehler. Heute machen wir das Gegenteil: Wir reduzieren die Komplexität auf null und sprechen ausschließlich über euren Praxisalltag.</p>
+          <h3 id="card1Title">01 / Der Einstieg</h3>
+          <span class="glass-sub" id="card1Subtitle">Klarheit schaffen</span>
+          <p id="card1Text">Bevor wir starten, stellen wir gemeinsam sicher: Meinen wir dasselbe, wenn wir über Automatisierung sprechen? Verfolgen wir dasselbe Ziel? Teilen wir dieselbe Vision für dieses Projekt? Alignment zuerst — alles andere danach.</p>
         </article>
         <article class="glass-card">
           <h3 id="card2Title">02 / Die Struktur</h3>
-          <span class="glass-sub" id="card2Subtitle">Die Spielregeln</span>
+          <span class="glass-sub" id="card2Subtitle">Der Ablauf</span>
           <p id="card2Text">Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares <strong>„Ja"</strong> oder <strong>„Nein"</strong> zu dieser Struktur.</p>
         </article>
         <article class="glass-card">
@@ -854,41 +837,14 @@
     <div class="question-stage">
       <div class="question-eyebrow" id="partnershipEyebrow">Kein Pitch mehr — eure Worte.</div>
       <h3 class="question-headline" id="partnershipQuestion">Wie stellt ihr euch eine Partnerschaft vor?</h3>
-      <p class="question-sub" id="partnershipSub">Wählt die Dimensionen, die eure Vorstellung am besten beschreiben — wir richten uns danach aus.</p>
     </div>
 
-    <div class="dimension-grid">
-      <button class="dimension-card" onclick="toggleDimension(this, 1)">
-        <span class="dim-num" id="dim1Num">01 / Dimension</span>
-        <span class="dim-title" id="dim1Title">Technologischer Mitgestalter</span>
-        <span class="dim-text" id="dim1Text">Ihr seid aktiv in Architektur-Entscheidungen eingebunden. Wir bauen zusammen, nicht für euch.</span>
-      </button>
-      <button class="dimension-card" onclick="toggleDimension(this, 2)">
-        <span class="dim-num" id="dim2Num">02 / Dimension</span>
-        <span class="dim-title" id="dim2Title">Revenue-Partner</span>
-        <span class="dim-text" id="dim2Text">Gemeinsames Skin in the Game — wir teilen Risiko und Upside bei der globalen Lizenzierung an Drittärzte.</span>
-      </button>
-      <button class="dimension-card" onclick="toggleDimension(this, 3)">
-        <span class="dim-num" id="dim3Num">03 / Dimension</span>
-        <span class="dim-title" id="dim3Title">Klare Übergabe & Ownership</span>
-        <span class="dim-text" id="dim3Text">Setup, Aufbau, dann gehört das System euch. Volle Kontrolle, volle Unabhängigkeit.</span>
-      </button>
-      <button class="dimension-card" onclick="toggleDimension(this, 4)">
-        <span class="dim-num" id="dim4Num">04 / Dimension</span>
-        <span class="dim-title" id="dim4Title">Langfristiger Innovationspartner</span>
-        <span class="dim-text" id="dim4Text">Kontinuierlicher Ausbau, gemeinsame Iteration — das System wächst mit eurer Klinik und Vision.</span>
-      </button>
-    </div>
-
-    <div class="vision-readout" id="visionReadout">
-      <span class="vision-idle" id="visionIdle">Klickt auf die Dimensionen, um eure Vorstellung zu formen.</span>
-    </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div id="footerLeft"><span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3</div>
-    <div id="footerRight">Work Zero × Satter · Für Jaqueline Orizabal & Laura</div>
+    <div id="footerLeft"><span class="footer-brand">ICM Intelligence</span> · Agentic OS v3</div>
+    <div id="footerRight"></div>
   </div>
 
 </div>
@@ -1046,26 +1002,26 @@ let currentLang = 'de';
 // ============================================================
 const translations = {
   de: {
-    pageTitle: 'ICM Intelligence — Agentic OS · Closing Workspace',
-    brandTag: 'Agentic OS · Closing Workspace',
+    pageTitle: 'ICM Intelligence — Agentic OS',
+    brandTag: 'Agentic OS',
     statusText: 'Engine State: <strong>Ready for Deployment</strong>',
     tabs: {
-      reset: { index: '01 / The Reset', label: 'Der Upfront Contract', sub: 'Minuten 0–5 · Den Rahmen setzen' },
+      reset: { index: '01 / Der Einstieg', label: 'Die Ausrichtung', sub: 'Minuten 0–5 · Gemeinsam abstimmen' },
       architecture: { index: '02 / The Architecture', label: 'Das Agentic OS', sub: 'Minuten 5–30 · Rollen, Journey, Datenfluss' },
       partnership: { index: '03 / The Partnership', label: 'Die Partnerschaftsfrage', sub: 'Minuten 30–45 · Eure Vorstellung' },
     },
     reset: {
-      eyebrow: 'Upfront Contract · Min 00–05',
+      eyebrow: 'Die Ausrichtung · Min 00–05',
       headline: 'Extreme Ownership.',
       headlineMuted: 'Klarheit vor jeder Zeile Code.',
-      sub: 'Drei Säulen. Eine Vereinbarung. Bevor wir starten, einigen wir uns auf die Spielregeln der nächsten 45 Minuten.',
+      sub: 'Drei Säulen. Ein gemeinsamer Start. Bevor wir beginnen, stimmen wir uns gemeinsam auf den Ablauf der nächsten 45 Minuten ab.',
       cards: [
-        { title: '01 / Der Reset', subtitle: 'Das Eingeständnis', text: 'Letztes Mal haben wir euch mit Tech-Details erschlagen. Das war unser Fehler. Heute machen wir das Gegenteil: Wir reduzieren die Komplexität auf null und sprechen ausschließlich über euren Praxisalltag.' },
-        { title: '02 / Die Struktur', subtitle: 'Die Spielregeln', text: 'Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares „Ja" oder „Nein" zu dieser Struktur.' },
+        { title: '01 / Der Reset', subtitle: 'Klarheit schaffen', text: 'Bevor wir starten, stellen wir gemeinsam sicher: Meinen wir dasselbe, wenn wir über Automatisierung sprechen? Verfolgen wir dasselbe Ziel? Teilen wir dieselbe Vision für dieses Projekt? Alignment zuerst — alles andere danach.' },
+        { title: '02 / Die Struktur', subtitle: 'Der Ablauf', text: 'Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares „Ja" oder „Nein" zu dieser Struktur.' },
         { title: '03 / Das Commitment', subtitle: 'Das Ziel', text: 'Wenn wir am Ende zu 100% aligned sind, legen wir den Grundstein für die kommerzielle Umsetzung und starten sofort die Delivery.' },
       ],
       agreement: 'Vereinbarung aktivieren: Klicken für Micro-Commitment',
-      agreementLocked: 'Upfront Contract aktiviert · Die nächsten 45 Minuten gehören eurer Vision',
+      agreementLocked: 'Ausrichtung bestätigt · Die nächsten 45 Minuten gehören eurer Vision',
       hint: 'Ein Klick besiegelt den Rahmen — unverbindlich, aber verbindend',
     },
     architecture: {
@@ -1132,28 +1088,28 @@ const translations = {
       ],
     },
     footer: {
-      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3',
-      right: 'Work Zero × Satter · Für Jaqueline Orizabal & Laura',
+      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS v3',
+      right: '',
     },
     accessSummary: '<strong>{full}</strong> Module mit Vollzugriff · <strong>{read}</strong> nur lesend · <strong>{limited}</strong> eingeschränkt · <strong>{none}</strong> gesperrt. Jede Rolle sieht ausschließlich, was sie wirklich braucht — ein Lizenz-Arzt erreicht nie ICMs Cocktail-Rezepte oder Finanzen.',
   },
   en: {
-    pageTitle: 'ICM Intelligence — Agentic OS · Closing Workspace',
-    brandTag: 'Agentic OS · Closing Workspace',
+    pageTitle: 'ICM Intelligence — Agentic OS',
+    brandTag: 'Agentic OS',
     statusText: 'Engine State: <strong>Ready for Deployment</strong>',
     tabs: {
-      reset: { index: '01 / The Reset', label: 'The Upfront Contract', sub: 'Minutes 0–5 · Set the frame' },
+      reset: { index: '01 / The Start', label: 'The Alignment', sub: 'Minutes 0–5 · Getting on the same page' },
       architecture: { index: '02 / The Architecture', label: 'The Agentic OS', sub: 'Minutes 5–30 · Roles, journey, data flow' },
       partnership: { index: '03 / The Partnership', label: 'The Partnership Question', sub: 'Minutes 30–45 · Your vision' },
     },
     reset: {
-      eyebrow: 'Upfront Contract · Min 00–05',
+      eyebrow: 'Die Ausrichtung · Min 00–05',
       headline: 'Extreme Ownership.',
       headlineMuted: 'Clarity before every line of code.',
-      sub: 'Three pillars. One agreement. Before we start, we align on the rules for the next 45 minutes.',
+      sub: 'Three pillars. One shared start. Before we begin, we align on the flow of the next 45 minutes together.',
       cards: [
-        { title: '01 / The Reset', subtitle: 'The Admission', text: 'Last time we buried you in tech details. That was our mistake. Today we do the opposite: we reduce complexity to zero and speak only about your daily reality.' },
-        { title: '02 / The Structure', subtitle: 'The Rules', text: 'We will now walk through your visualized patient journey and role distribution together. Our goal today is a clear “yes” or “no” to this structure.' },
+        { title: '01 / The Start', subtitle: 'Creating Clarity', text: 'Before we start, we make sure together: do we mean the same thing when we talk about automation? Are we pursuing the same goal? Do we share the same vision for this project? Alignment first — everything else after.' },
+        { title: '02 / The Structure', subtitle: 'The Flow', text: 'We will now walk through your visualized patient journey and role distribution together. Our goal today is a clear “yes” or “no” to this structure.' },
         { title: '03 / The Commitment', subtitle: 'The Goal', text: 'If we are 100% aligned at the end, we lay the foundation for commercial execution and start delivery immediately.' },
       ],
       agreement: 'Activate agreement: Click for micro commitment',
@@ -1224,28 +1180,28 @@ const translations = {
       ],
     },
     footer: {
-      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3',
-      right: 'Work Zero × Satter · For Jaqueline Orizabal & Laura',
+      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS v3',
+      right: '',
     },
     accessSummary: '<strong>{full}</strong> modules with full access · <strong>{read}</strong> read only · <strong>{limited}</strong> limited · <strong>{none}</strong> blocked. Each role only sees what it truly needs — a license doctor never reaches ICM’s cocktail recipes or finance.',
   },
   es: {
-    pageTitle: 'ICM Intelligence — Agentic OS · Closing Workspace',
-    brandTag: 'Agentic OS · Closing Workspace',
+    pageTitle: 'ICM Intelligence — Agentic OS',
+    brandTag: 'Agentic OS',
     statusText: 'Estado del motor: <strong>Listo para despliegue</strong>',
     tabs: {
-      reset: { index: '01 / The Reset', label: 'El contrato inicial', sub: 'Minutos 0–5 · Fijar el marco' },
+      reset: { index: '01 / El Inicio', label: 'El contrato inicial', sub: 'Minutos 0–5 · Fijar el marco' },
       architecture: { index: '02 / The Architecture', label: 'El Agentic OS', sub: 'Minutos 5–30 · Roles, journey, flujo de datos' },
       partnership: { index: '03 / The Partnership', label: 'La pregunta de asociación', sub: 'Minutos 30–45 · Vuestra visión' },
     },
     reset: {
-      eyebrow: 'Upfront Contract · Min 00–05',
+      eyebrow: 'Die Ausrichtung · Min 00–05',
       headline: 'Extreme Ownership.',
       headlineMuted: 'Claridad antes de cada línea de código.',
-      sub: 'Tres pilares. Un acuerdo. Antes de empezar, nos alineamos en las reglas para los próximos 45 minutos.',
+      sub: 'Tres pilares. Un inicio compartido. Antes de empezar, nos alineamos juntos sobre el flujo de los próximos 45 minutos.',
       cards: [
-        { title: '01 / El Reset', subtitle: 'La admisión', text: 'La última vez os saturamos con detalles técnicos. Fue nuestro error. Hoy hacemos lo contrario: reducimos la complejidad a cero y hablamos solo de vuestra rutina diaria.' },
-        { title: '02 / La Estructura', subtitle: 'Las reglas', text: 'Ahora recorremos juntos vuestro patient journey visualizado y la distribución de roles. Nuestro objetivo hoy es un claro “sí” o “no” a esta estructura.' },
+        { title: '01 / El Inicio', subtitle: 'Crear Claridad', text: 'Antes de empezar, nos aseguramos juntos: ¿hablamos de lo mismo cuando decimos automatización? ¿Perseguimos el mismo objetivo? ¿Compartimos la misma visión para este proyecto? Primero el alineamiento — todo lo demás después.' },
+        { title: '02 / La Estructura', subtitle: 'El Flujo', text: 'Ahora recorremos juntos vuestro patient journey visualizado y la distribución de roles. Nuestro objetivo hoy es un claro “sí” o “no” a esta estructura.' },
         { title: '03 / El Compromiso', subtitle: 'La meta', text: 'Si al final estamos 100 % alineados, sentamos las bases para la implementación comercial y arrancamos la delivery de inmediato.' },
       ],
       agreement: 'Activar acuerdo: haz clic para micro compromiso',
@@ -1316,8 +1272,8 @@ const translations = {
       ],
     },
     footer: {
-      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3',
-      right: 'Work Zero × Satter · Para Jaqueline Orizabal & Laura',
+      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS v3',
+      right: '',
     },
     accessSummary: '<strong>{full}</strong> módulos con acceso completo · <strong>{read}</strong> solo lectura · <strong>{limited}</strong> limitado · <strong>{none}</strong> bloqueado. Cada rol ve únicamente lo que realmente necesita — un médico licenciado nunca accede a las recetas de cóctel de ICM ni a finanzas.',
   },
@@ -1422,18 +1378,6 @@ function applyLanguage() {
   document.getElementById('partnershipPanelTitle').textContent = lang.partnership.panelTitle;
   document.getElementById('partnershipEyebrow').textContent = lang.partnership.eyebrow;
   document.getElementById('partnershipQuestion').textContent = lang.partnership.question;
-  document.getElementById('partnershipSub').textContent = lang.partnership.sub;
-  document.getElementById('visionIdle').textContent = lang.partnership.idle;
-  lang.partnership.dims.forEach(function(d, i) {
-    var n = i + 1;
-    var elNum = document.getElementById('dim' + n + 'Num');
-    var elTitle = document.getElementById('dim' + n + 'Title');
-    var elText = document.getElementById('dim' + n + 'Text');
-    if (elNum) elNum.textContent = d.num;
-    if (elTitle) elTitle.textContent = d.title;
-    if (elText) elText.textContent = d.text;
-  });
-  renderVisionReadout();
   document.getElementById('footerLeft').innerHTML = lang.footer.left;
   document.getElementById('footerRight').textContent = lang.footer.right;
 
@@ -1608,48 +1552,12 @@ agreementBtn.addEventListener('click', () => {
   agreementBtn.classList.add('locked');
   agreementBtn.setAttribute('aria-pressed', 'true');
   document.getElementById('agIcon').textContent = '✓';
-  document.getElementById('agText').textContent = translations[currentLang].reset.agreementLocked || 'Upfront Contract eingeloggt · Die nächsten 45 Minuten gehören eurer Vision';
+  document.getElementById('agText').textContent = translations[currentLang].reset.agreementLocked || 'Ausrichtung bestätigt · Die nächsten 45 Minuten gehören eurer Vision';
   const hint = document.getElementById('agreementHint');
   if (hint) hint.style.opacity = '0';
   setTimeout(() => switchView('architecture'), 2000);
 });
 
-// ============================================================
-// LOGIN
-// ============================================================
-(function() {
-  const overlay = document.getElementById('loginOverlay');
-  const userInput = document.getElementById('loginUser');
-  const passInput = document.getElementById('loginPass');
-  const errorEl = document.getElementById('loginError');
-  const btn = document.getElementById('loginBtn');
-
-  function attempt() {
-    const u = userInput.value;
-    const p = passInput.value;
-    if (u === 'ICM!!++890' && p === 'xP!+!!#hUp') {
-      overlay.classList.add('fade-out');
-      overlay.addEventListener('animationend', () => overlay.remove(), { once: true });
-    } else {
-      errorEl.textContent = 'Ungültige Zugangsdaten.';
-      userInput.classList.add('error');
-      passInput.classList.add('error');
-      passInput.value = '';
-      setTimeout(() => {
-        userInput.classList.remove('error');
-        passInput.classList.remove('error');
-        errorEl.textContent = '';
-      }, 2200);
-    }
-  }
-
-  btn.addEventListener('click', attempt);
-  [userInput, passInput].forEach(el => {
-    el.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
-  });
-
-  userInput.focus();
-})();
 
 // ============================================================
 // PARTNERSHIP — DIMENSION TOGGLE
