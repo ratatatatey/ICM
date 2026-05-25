@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICM Intelligence — Agentic OS · Closing Workspace</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1118;
+    --bg-panel: #161B26;
+    --bg-card: #1E2533;
+    --bg-card-hi: #283142;
+    --line: #2A3243;
+    --line-bright: #3A4456;
+    --text: #E8EBF0;
+    --text-dim: #94A0B8;
+    --text-faint: #5C667D;
+
+    --gold: #D4AE6A;
+    --gold-bright: #E8C998;
+    --gold-dim: #8A7547;
+    --success: #6FAE7F;
+    --success-bright: #8FD0A0;
+    --danger: #C97070;
+
+    /* Capability-Typen */
+    --type-manual: #C9A961;
+    --type-skill: #6FA8DC;
+    --type-routine: #C97070;
+    --type-agent: #B084C7;
+
+    /* Branch-Farben */
+    --br-crm: #6FAE7F;
+    --br-sched: #6FA8DC;
+    --br-ehr: #C97070;
+    --br-phys: #B084C7;
+    --br-lab: #C9A961;
+    --br-treat: #E89C5C;
+    --br-fin: #8FB89D;
+    --br-comp: #A8917D;
+    --br-inv: #7A9CB8;
+    --br-bi: #D4AE6A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding: 28px 20px 40px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(212, 174, 106, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 174, 106, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .frame {
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============== TOP BAR ============== */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 22px;
+  }
+
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .brand-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .brand-mark .sep { color: var(--gold); margin: 0 6px; font-weight: 500; }
+  .brand-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--bg-panel);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 0 rgba(212,174,106,0.6);
+    animation: statusPulse 2.2s infinite;
+  }
+  .status-pill strong { color: var(--gold); font-weight: 700; }
+  @keyframes statusPulse {
+    0% { box-shadow: 0 0 0 0 rgba(212,174,106,0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(212,174,106,0); }
+    100% { box-shadow: 0 0 0 0 rgba(212,174,106,0); }
+  }
+
+  /* ============== TAB NAVIGATION ============== */
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .tab {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    padding: 18px 22px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.25s ease;
+    overflow: hidden;
+  }
+  .tab:hover { border-color: var(--line-bright); color: var(--text); background: var(--bg-card); }
+  .tab.active { border-color: var(--gold); background: var(--bg-card); color: var(--text); box-shadow: 0 0 0 1px rgba(212,174,106,0.25), 0 10px 30px rgba(212,174,106,0.08); }
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    height: 2px; width: 100%;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .tab-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 7px;
+  }
+  .tab.active .tab-index { color: var(--gold); }
+  .tab-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.05;
+  }
+  .tab-sub { font-size: 11px; color: var(--text-faint); margin-top: 3px; letter-spacing: 0.03em; }
+
+  /* ============== VIEWS ============== */
+  .view { display: none; animation: fadeIn 0.45s ease both; }
+  .view.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .panel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  /* ============== TAB 1: THE RESET ============== */
+  .reset-stage { display: flex; flex-direction: column; align-items: center; padding: 24px 0 8px; }
+  .reset-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 16px;
+  }
+  .reset-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 600; line-height: 1.04; letter-spacing: -0.02em;
+    text-align: center; max-width: 920px; margin-bottom: 10px;
+  }
+  .reset-headline .muted { color: var(--text-faint); }
+  .reset-sub { font-size: 15px; color: var(--text-dim); text-align: center; max-width: 580px; margin-bottom: 52px; line-height: 1.6; }
+
+  .reset-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    width: 100%; max-width: 1240px; margin-bottom: 52px;
+  }
+  .glass-card {
+    position: relative;
+    background: rgba(30, 37, 51, 0.5);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 34px 30px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    overflow: hidden;
+    transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .glass-card::before {
+    content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.6;
+  }
+  .glass-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 18px 50px rgba(212,174,106,0.12); }
+  .glass-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 16px;
+  }
+  .glass-card .glass-sub {
+    font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600;
+    color: var(--text); margin-bottom: 14px; display: block; line-height: 1.15;
+  }
+  .glass-card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+  .glass-card p strong { color: var(--text); font-weight: 600; }
+
+  .agreement {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+    min-width: 520px; max-width: 100%; padding: 22px 42px;
+    border: 1px solid var(--gold); border-radius: 4px;
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hi));
+    color: var(--gold-bright);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; overflow: hidden;
+    transition: background 0.7s cubic-bezier(0.16,1,0.3,1), border-color 0.7s ease, color 0.5s ease, box-shadow 0.7s ease, transform 0.2s ease;
+    box-shadow: 0 0 0 1px rgba(212,174,106,0.12), 0 8px 32px rgba(212,174,106,0.10);
+    animation: agPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes agPulse {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(212,174,106,0.12), 0 8px 32px rgba(212,174,106,0.10); }
+    50% { box-shadow: 0 0 0 1px rgba(212,174,106,0.30), 0 10px 42px rgba(212,174,106,0.22); }
+  }
+  .agreement:hover { transform: translateY(-2px); }
+  .agreement .ag-icon {
+    display: inline-flex; width: 26px; height: 26px; align-items: center; justify-content: center;
+    border-radius: 50%; border: 1px solid currentColor; font-size: 14px; flex-shrink: 0; transition: all 0.5s ease;
+  }
+  .agreement.locked {
+    background: linear-gradient(135deg, rgba(111,174,127,0.20), rgba(111,174,127,0.07));
+    border-color: var(--success); color: var(--success-bright); cursor: default;
+    animation: successGlow 2.4s ease-in-out infinite;
+  }
+  .agreement.locked:hover { transform: none; }
+  .agreement.locked .ag-icon { background: var(--success); color: var(--bg); border-color: var(--success); }
+  @keyframes successGlow {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(111,174,127,0.25), 0 14px 48px rgba(111,174,127,0.22); }
+    50% { box-shadow: 0 0 0 1px rgba(111,174,127,0.45), 0 14px 56px rgba(111,174,127,0.42); }
+  }
+  .agreement-hint {
+    margin-top: 18px; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--text-faint);
+    transition: opacity 0.5s ease;
+  }
+
+  /* ============== TAB 2: ARCHITECTURE ============== */
+  .arch-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
+  .type-legend { display: inline-flex; gap: 6px; padding: 6px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 100px; }
+  .type-pill {
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; border-radius: 100px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid;
+  }
+  .type-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .type-pill.manual { color: var(--type-manual); border-color: var(--type-manual); }
+  .type-pill.skill { color: var(--type-skill); border-color: var(--type-skill); }
+  .type-pill.routine { color: var(--type-routine); border-color: var(--type-routine); }
+  .type-pill.agent { color: var(--type-agent); border-color: var(--type-agent); }
+
+  /* Role switcher */
+  .role-bar { margin-bottom: 22px; }
+  .role-switcher {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    background: var(--bg-panel); border: 1px solid var(--line); padding: 8px; border-radius: 4px;
+  }
+  .role-btn {
+    background: transparent; border: 1px solid transparent; color: var(--text-dim);
+    padding: 13px 14px; cursor: pointer; text-align: left; transition: all 0.2s ease;
+    font-family: inherit; border-radius: 2px; position: relative;
+  }
+  .role-btn:hover { background: var(--bg-card); color: var(--text); }
+  .role-btn.active { background: var(--bg-card); border-color: var(--role-color, var(--gold)); color: var(--text); }
+  .role-btn.active::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; background: var(--role-color, var(--gold)); }
+  .role-name { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 5px; color: var(--role-color, var(--text-dim)); }
+  .role-desc { font-size: 11px; color: var(--text-dim); line-height: 1.35; }
+  .role-btn.active .role-desc { color: var(--text); }
+
+  .arch-canvas { overflow-x: auto; padding-bottom: 6px; }
+  .arch-inner { min-width: 1320px; }
+
+  /* Conductor */
+  .conductor-zone { display: flex; justify-content: center; align-items: center; min-height: 96px; position: relative; margin-bottom: 4px; }
+  .conductor {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hi) 100%);
+    border: 1px solid var(--gold); padding: 16px 30px; border-radius: 4px; text-align: center; min-width: 340px;
+    position: relative; box-shadow: 0 0 0 4px rgba(201,169,97,0.05), 0 16px 40px rgba(201,169,97,0.1);
+  }
+  .conductor::before, .conductor::after { content: ''; position: absolute; width: 12px; height: 12px; border: 1px solid var(--gold); }
+  .conductor::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+  .conductor::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+  .conductor-icon { display: inline-block; width: 30px; height: 30px; margin-right: 12px; vertical-align: middle; }
+  .conductor-icon svg { width: 100%; height: 100%; animation: rotate 24s linear infinite; }
+  @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .conductor-text { display: inline-block; vertical-align: middle; text-align: left; }
+  .conductor-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 3px; }
+  .conductor-sub { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
+
+  .branches-headers { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; margin-bottom: 6px; }
+  .branch-header {
+    background: var(--branch-color, var(--bg-card)); padding: 11px 6px 9px; text-align: center;
+    border-radius: 3px 3px 0 0; position: relative; transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+  .branch-header::before {
+    content: ''; position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 16px; background: var(--branch-color, var(--line)); opacity: 0.5;
+  }
+  .branch-name { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bg); line-height: 1.1; margin-bottom: 2px; }
+  .branch-sub { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(14,17,24,0.6); font-weight: 600; }
+  .branch-badge {
+    position: absolute; top: 5px; right: 6px; width: 15px; height: 15px; border-radius: 3px;
+    font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+    background: rgba(14,17,24,0.28); color: var(--bg);
+  }
+
+  .system-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; margin-bottom: 16px; }
+  .branch-column { display: flex; flex-direction: column; gap: 4px; position: relative; transition: opacity 0.35s ease, filter 0.35s ease; }
+  .capability {
+    background: var(--bg-card); border-left: 2px solid var(--branch-color, var(--line));
+    padding: 8px 8px 8px 10px; border-radius: 0 2px 2px 0; position: relative;
+    transition: all 0.15s ease; cursor: pointer; min-height: 52px;
+  }
+  .capability:hover { background: var(--bg-card-hi); transform: translateX(1px); }
+  .capability-name { font-size: 10.5px; font-weight: 600; color: var(--text); line-height: 1.25; margin-bottom: 3px; padding-right: 14px; }
+  .capability-path { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--text-faint); letter-spacing: 0.02em; line-height: 1.2; }
+  .capability-type { position: absolute; top: 8px; right: 6px; width: 8px; height: 8px; border-radius: 50%; }
+  .capability-type.manual { background: var(--type-manual); }
+  .capability-type.skill { background: var(--type-skill); }
+  .capability-type.routine { background: var(--type-routine); }
+  .capability-type.agent { background: var(--type-agent); }
+
+  /* Access states (driven by role) */
+  .branch-column.acc-read { opacity: 0.92; }
+  .branch-column.acc-limited { opacity: 0.82; }
+  .branch-column.acc-none { opacity: 0.28; filter: grayscale(0.7); }
+  .branch-column.acc-none .capability { cursor: not-allowed; }
+  .branch-header.acc-none { opacity: 0.4; filter: grayscale(0.6); }
+  .col-lock {
+    position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+    z-index: 3; pointer-events: none; flex-direction: column; gap: 6px;
+  }
+  .branch-column.acc-none .col-lock { display: flex; }
+  .col-lock-icon { font-size: 22px; color: var(--danger); }
+  .col-lock-text { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--danger); }
+
+  .automation {
+    background: linear-gradient(90deg, rgba(201,169,97,0.12) 0%, rgba(201,169,97,0.18) 50%, rgba(201,169,97,0.12) 100%);
+    border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+    padding: 12px 20px; margin-bottom: 16px; text-align: center;
+  }
+  .automation-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+  .automation-triggers { display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .trigger { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-dim); padding: 3px 10px; background: var(--bg); border: 1px solid var(--line); border-radius: 2px; letter-spacing: 0.03em; }
+  .trigger::before { content: '◆ '; color: var(--gold); margin-right: 2px; }
+
+  .integrations { text-align: center; padding: 16px 0 4px; }
+  .integrations-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-faint); font-weight: 600; margin-bottom: 14px; }
+  .integrations-row { display: inline-flex; gap: 26px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .integration-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; }
+  .integration-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--int-color, var(--gold)); }
+  .integration-name { font-size: 9px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+
+  /* Detail flyout for capability / access */
+  .access-readout {
+    margin-top: 18px; background: var(--bg-panel); border: 1px solid var(--line);
+    border-left: 3px solid var(--role-color, var(--gold)); border-radius: 4px; padding: 16px 20px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .access-readout .ar-role { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--role-color, var(--gold)); }
+  .access-readout .ar-text { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; flex: 1; min-width: 280px; }
+  .access-readout .ar-text strong { color: var(--text); }
+
+  /* Patient Journey */
+  .journey-section, .flow-section { background: var(--bg-panel); border: 1px solid var(--line); padding: 26px 28px; margin-top: 28px; border-radius: 4px; }
+  .journey-steps { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; margin: 20px 0; }
+  .step { background: var(--bg-card); border: 1px solid var(--line); padding: 13px 8px; cursor: pointer; transition: all 0.2s ease; text-align: center; border-radius: 3px; }
+  .step:hover { background: var(--bg-card-hi); border-color: var(--gold-dim); }
+  .step.active { background: var(--bg-card-hi); border-color: var(--gold); }
+  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 5px; }
+  .step-name { font-size: 9.5px; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.25; }
+  .step.active .step-name { color: var(--text); }
+  .step-detail { background: var(--bg-card); border-left: 2px solid var(--gold); padding: 20px 24px; border-radius: 0 3px 3px 0; }
+  .step-detail-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
+  .step-detail-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .step-agents { font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
+  .step-agents span { color: var(--gold); }
+  .step-detail-content { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
+  .step-block-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); font-weight: 600; margin-bottom: 8px; }
+  .step-block ul { list-style: none; }
+  .step-block li { padding: 4px 0 4px 16px; position: relative; font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .step-block li::before { content: '→'; position: absolute; left: 0; color: var(--gold); }
+
+  .flow-diagram { margin-top: 20px; padding: 28px; background: var(--bg); border: 1px solid var(--line); position: relative; overflow: hidden; border-radius: 4px; }
+  .flow-stages { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 12px; align-items: stretch; }
+  .flow-stage { background: var(--bg-card); border: 1px solid var(--line-bright); padding: 14px; border-radius: 3px; }
+  .flow-stage-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 8px; }
+  .flow-stage-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .flow-stage-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 18px; }
+
+  /* ============== TAB 3: PARTNERSHIP ============== */
+  .partner-intro { max-width: 780px; font-size: 13px; color: var(--text-dim); margin: 8px 0 28px; line-height: 1.6; }
+  .partner-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; margin-bottom: 28px; align-items: stretch; }
+  .scenario { position: relative; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 6px; padding: 32px; display: flex; flex-direction: column; }
+  .scenario.dimmed { opacity: 0.6; filter: grayscale(0.3); }
+  .scenario.dimmed:hover { opacity: 0.82; transition: opacity 0.3s ease; }
+  .scenario.highlight {
+    border: 1px solid var(--gold);
+    background: linear-gradient(160deg, var(--bg-panel), rgba(212,174,106,0.06));
+    box-shadow: 0 0 0 1px rgba(212,174,106,0.2), 0 0 60px rgba(212,174,106,0.12);
+    animation: partnerPulse 3s ease-in-out infinite;
+  }
+  @keyframes partnerPulse {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(212,174,106,0.18), 0 0 50px rgba(212,174,106,0.10); }
+    50% { box-shadow: 0 0 0 1px rgba(212,174,106,0.42), 0 0 84px rgba(212,174,106,0.26); }
+  }
+  .scenario-badge { position: absolute; top: -11px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; padding: 5px 12px; border-radius: 2px; background: var(--gold); color: var(--bg); }
+  .scenario-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; }
+  .scenario.highlight .scenario-eyebrow { color: var(--gold); }
+  .scenario-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; line-height: 1.1; margin-bottom: 22px; }
+  .price-rows { border-top: 1px solid var(--line); margin-bottom: 20px; }
+  .price-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .price-label { font-size: 12px; color: var(--text-dim); letter-spacing: 0.03em; line-height: 1.4; }
+  .price-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text); white-space: nowrap; text-align: right; }
+  .scenario.highlight .price-value { color: var(--gold-bright); }
+  .price-value small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-top: 2px; }
+  .price-value.share { color: var(--success); }
+  .scenario-highlights { list-style: none; margin-top: 4px; }
+  .scenario-highlights li { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; padding: 6px 0 6px 22px; position: relative; }
+  .scenario.dimmed .scenario-highlights li::before { content: '–'; position: absolute; left: 4px; color: var(--text-faint); }
+  .scenario.highlight .scenario-highlights li { color: var(--text); }
+  .scenario.highlight .scenario-highlights li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+
+  .funding-banner {
+    display: flex; align-items: center; gap: 20px;
+    background: linear-gradient(135deg, rgba(111,174,127,0.12), rgba(212,174,106,0.08));
+    border: 1px solid var(--success); border-radius: 6px; padding: 24px 32px;
+    box-shadow: 0 0 40px rgba(111,174,127,0.10);
+  }
+  .funding-icon { font-size: 28px; color: var(--success); flex-shrink: 0; line-height: 1; }
+  .funding-text { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .funding-text strong { color: var(--success); font-weight: 700; letter-spacing: 0.04em; }
+  .funding-text .figure { color: var(--gold-bright); font-weight: 600; }
+
+  /* ============== FOOTER ============== */
+  .footer { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); }
+  .footer-brand { color: var(--gold); font-weight: 700; }
+
+  @media (max-width: 1100px) {
+    .tabs { grid-template-columns: 1fr; }
+    .reset-cards { grid-template-columns: 1fr; max-width: 560px; }
+    .partner-grid { grid-template-columns: 1fr; }
+    .role-switcher { grid-template-columns: repeat(2, 1fr); }
+    .agreement { min-width: 0; width: 100%; }
+    .funding-banner { flex-direction: column; text-align: center; }
+    .step-detail-content { grid-template-columns: 1fr; }
+    .flow-stages { grid-template-columns: 1fr; gap: 8px; }
+    .flow-arrow { transform: rotate(90deg); height: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-mark">Work&nbsp;Zero<span class="sep">×</span>ICM Intelligence</span>
+      <span class="brand-tag">Agentic OS · Closing Workspace</span>
+    </div>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Engine State: <strong>Ready for Deployment</strong>
+    </div>
+  </div>
+
+  <!-- TAB NAVIGATION -->
+  <nav class="tabs" id="tabs">
+    <button class="tab" data-view="reset">
+      <span class="tab-index">01 / The Reset</span>
+      <span class="tab-label">Der Upfront Contract</span>
+      <div class="tab-sub">Minuten 0–5 · Den Rahmen setzen</div>
+    </button>
+    <button class="tab active" data-view="architecture">
+      <span class="tab-index">02 / The Architecture</span>
+      <span class="tab-label">Das Agentic OS</span>
+      <div class="tab-sub">Minuten 5–30 · Rollen, Journey, Datenfluss</div>
+    </button>
+    <button class="tab" data-view="partnership">
+      <span class="tab-index">03 / The Partnership</span>
+      <span class="tab-label">Das Closing</span>
+      <div class="tab-sub">Minuten 30–45 · Pricing & Risk Reversal</div>
+    </button>
+  </nav>
+
+  <!-- ==================== VIEW 01: RESET ==================== -->
+  <div class="view" id="view-reset">
+    <div class="reset-stage">
+      <div class="reset-eyebrow">Upfront Contract · Min 00–05</div>
+      <h2 class="reset-headline">Extreme Ownership. <span class="muted">Klarheit vor jeder Zeile Code.</span></h2>
+      <p class="reset-sub">Drei Säulen. Eine Vereinbarung. Bevor wir starten, einigen wir uns auf die Spielregeln der nächsten 45 Minuten.</p>
+
+      <div class="reset-cards">
+        <article class="glass-card">
+          <h3>01 / Der Reset</h3>
+          <span class="glass-sub">Das Eingeständnis</span>
+          <p>Letztes Mal haben wir euch mit Tech-Details erschlagen. Das war unser Fehler. Heute machen wir das Gegenteil: Wir reduzieren die Komplexität auf null und sprechen ausschließlich über euren Praxisalltag.</p>
+        </article>
+        <article class="glass-card">
+          <h3>02 / Die Struktur</h3>
+          <span class="glass-sub">Die Spielregeln</span>
+          <p>Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares <strong>„Ja"</strong> oder <strong>„Nein"</strong> zu dieser Struktur.</p>
+        </article>
+        <article class="glass-card">
+          <h3>03 / Das Commitment</h3>
+          <span class="glass-sub">Das Ziel</span>
+          <p>Wenn wir am Ende zu 100% aligned sind, legen wir den Grundstein für die kommerzielle Umsetzung und starten sofort die Delivery.</p>
+        </article>
+      </div>
+
+      <button class="agreement" id="agreementBtn" aria-pressed="false">
+        <span class="ag-icon" id="agIcon">○</span>
+        <span class="ag-text" id="agText">Vereinbarung aktivieren: Klicken für Micro-Commitment</span>
+      </button>
+      <div class="agreement-hint" id="agreementHint">Ein Klick besiegelt den Rahmen — unverbindlich, aber verbindend</div>
+    </div>
+  </div>
+
+  <!-- ==================== VIEW 02: ARCHITECTURE ==================== -->
+  <div class="view active" id="view-architecture">
+
+    <div class="arch-head">
+      <div>
+        <div class="section-label">Das digitale Betriebssystem der Klinik</div>
+        <h2 class="panel-title">Agentic OS · Live-Rollenansicht</h2>
+      </div>
+      <div class="type-legend">
+        <span class="type-pill manual"><span class="dot"></span>Manual</span>
+        <span class="type-pill skill"><span class="dot"></span>Skill</span>
+        <span class="type-pill routine"><span class="dot"></span>Routine</span>
+        <span class="type-pill agent"><span class="dot"></span>Agent</span>
+      </div>
+    </div>
+
+    <!-- ROLE SWITCHER -->
+    <div class="role-bar">
+      <div class="section-label">Rolle wählen — die Architektur passt sich live an</div>
+      <div class="role-switcher" id="roleSwitcher"><!-- JS --></div>
+    </div>
+
+    <!-- ARCHITECTURE CANVAS -->
+    <div class="arch-canvas">
+      <div class="arch-inner">
+
+        <!-- Conductor -->
+        <div class="conductor-zone">
+          <div class="conductor">
+            <div class="conductor-icon">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#D4AE6A" stroke-width="1.5">
+                  <circle cx="16" cy="16" r="4" fill="#D4AE6A" stroke="none"/>
+                  <line x1="16" y1="2" x2="16" y2="8"/>
+                  <line x1="16" y1="24" x2="16" y2="30"/>
+                  <line x1="2" y1="16" x2="8" y2="16"/>
+                  <line x1="24" y1="16" x2="30" y2="16"/>
+                  <line x1="6" y1="6" x2="10" y2="10"/>
+                  <line x1="22" y1="22" x2="26" y2="26"/>
+                  <line x1="6" y1="26" x2="10" y2="22"/>
+                  <line x1="22" y1="10" x2="26" y2="6"/>
+                </g>
+              </svg>
+            </div>
+            <div class="conductor-text">
+              <div class="conductor-title">The Orchestrator</div>
+              <div class="conductor-sub">Routes every task to the right agent</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Branch headers -->
+        <div class="branches-headers" id="branchHeaders"><!-- JS --></div>
+
+        <!-- System grid -->
+        <div class="system-grid" id="systemGrid"><!-- JS --></div>
+
+        <!-- Automation layer -->
+        <div class="automation">
+          <div class="automation-label">Automation Layer · Wann läuft was</div>
+          <div class="automation-triggers">
+            <span class="trigger">on-demand · user trigger</span>
+            <span class="trigger">scheduled · cron</span>
+            <span class="trigger">on-event · phone · email · result</span>
+            <span class="trigger">long-running · treatment</span>
+            <span class="trigger">on-threshold · stock · vitals</span>
+          </div>
+        </div>
+
+        <!-- Integrations -->
+        <div class="integrations">
+          <div class="integrations-label">Tools · Integrations · Software Assets</div>
+          <div class="integrations-row">
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #D4AE6A;">L</div><div class="integration-name">Llama 3.3</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #6FA8DC;">Q</div><div class="integration-name">Qwen 2.5</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #C97070;">H</div><div class="integration-name">Hetzner DE</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #B084C7;">Q</div><div class="integration-name">Qdrant</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #6FAE7F;">P</div><div class="integration-name">PostgreSQL</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #E89C5C;">K</div><div class="integration-name">Keycloak</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #8FB89D;">P</div><div class="integration-name">PubMed API</div></div>
+            <div class="integration-item"><div class="integration-icon" style="--int-color: #C9A961;">D</div><div class="integration-name">DATEV</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Access readout -->
+    <div class="access-readout" id="accessReadout"><!-- JS --></div>
+
+    <!-- PATIENT JOURNEY -->
+    <section class="journey-section">
+      <div class="section-label">Patient Journey</div>
+      <h2 class="panel-title">Wie die Agents zusammenarbeiten</h2>
+      <div class="journey-steps" id="journeySteps"><!-- JS --></div>
+      <div class="step-detail" id="stepDetail"><!-- JS --></div>
+    </section>
+
+    <!-- DATA FLOW -->
+    <section class="flow-section">
+      <div class="section-label">Datenfluss</div>
+      <h2 class="panel-title">Was passiert, wenn neue Patientendaten ankommen</h2>
+      <div class="flow-diagram">
+        <div class="flow-stages">
+          <div class="flow-stage">
+            <div class="flow-stage-label">Eingang</div>
+            <div class="flow-stage-title">Patient ruft an</div>
+            <div class="flow-stage-desc">„Hallo, ich habe Lyme-Disease und möchte Vita Veresset machen."</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-stage">
+            <div class="flow-stage-label">Orchestrator</div>
+            <div class="flow-stage-title">Routing</div>
+            <div class="flow-stage-desc">Erkennt: Erstkontakt, Indikation, Sprachenwahl. Aktiviert Onboarding-Agent.</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-stage">
+            <div class="flow-stage-label">Agents arbeiten</div>
+            <div class="flow-stage-title">Parallel</div>
+            <div class="flow-stage-desc">Onboarding erfasst Daten, Indikations-Agent sucht ähnliche Fälle, Research-Agent findet Evidenz.</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-stage">
+            <div class="flow-stage-label">Ablage</div>
+            <div class="flow-stage-title">Strukturiert</div>
+            <div class="flow-stage-desc">CRM-Eintrag, EHR-Akte, Termin-Vorschlag, Vorab-Indikation für Arzt — alles automatisch.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== VIEW 03: PARTNERSHIP ==================== -->
+  <div class="view" id="view-partnership">
+    <div class="section-label">Minuten 30–45 · Das Finale</div>
+    <h2 class="panel-title">Der Investitionsrahmen & die Risiko-Umkehr</h2>
+    <p class="partner-intro">Zwei Wege, dasselbe System zu bekommen. Der eine macht uns zum austauschbaren Dienstleister. Der andere macht uns zu Partnern, die mit euch ins Risiko gehen — Skin in the Game auf Augenhöhe.</p>
+
+    <div class="partner-grid">
+      <!-- Option A -->
+      <div class="scenario dimmed">
+        <div class="scenario-eyebrow">Option A</div>
+        <div class="scenario-title">Das klassische Agenturmodell</div>
+        <div class="price-rows">
+          <div class="price-row"><span class="price-label">Setup-Gebühr</span><span class="price-value">80.000 €</span></div>
+          <div class="price-row"><span class="price-label">Laufender Retainer</span><span class="price-value">8.500 €<small>/ Monat</small></span></div>
+        </div>
+        <ul class="scenario-highlights">
+          <li>Reine Dienstleistung</li>
+          <li>Einmalige Code-Übergabe</li>
+          <li>Volles Betriebs- und Supportrisiko bei der Klinik</li>
+          <li>Keine gemeinsame Skalierung</li>
+        </ul>
+      </div>
+
+      <!-- Option B -->
+      <div class="scenario highlight">
+        <span class="scenario-badge">Empfohlen</span>
+        <div class="scenario-eyebrow">Option B</div>
+        <div class="scenario-title">Die strategische Torus-Partnerschaft</div>
+        <div class="price-rows">
+          <div class="price-row"><span class="price-label">Setup-Investition</span><span class="price-value">38.500 €</span></div>
+          <div class="price-row"><span class="price-label">Enterprise Hosting & AI Safety</span><span class="price-value">4.800 €<small>/ Monat</small></span></div>
+          <div class="price-row"><span class="price-label">Skalierungs-Hebel</span><span class="price-value share">20%<small>Revenue Share · Drittarzt-Lizenzen</small></span></div>
+        </div>
+        <ul class="scenario-highlights">
+          <li>Gemeinsames Skin in the Game</li>
+          <li>Work Zero trägt das technologische Risiko</li>
+          <li>Voller Fokus auf die weltweite Lizenzierung an Drittärzte (z.B. Dr. Schwachen, Kathi Düsterhöft)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="funding-banner">
+      <span class="funding-icon">⚡</span>
+      <p class="funding-text">
+        <strong>TORUS CAPITAL HACK:</strong> Über unsere Förder-Unit (Akuna/Inteli) rufen wir bis zu <span class="figure">30.000 €</span> staatlichen Lohnkostenzuschuss pro Kopf für euer Team ab. Das Setup von <span class="figure">38.500 €</span> refinanziert sich für eure Klinik faktisch von selbst und ist sofort Cashflow-positiv.
+      </p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div><span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3</div>
+    <div>Work Zero × Satter · Für Jaqueline Orizabal & Laura</div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// DATA — 10 Branches · Capabilities (aus Sattars Modell)
+// ============================================================
+const branches = [
+  { id:'crm',   name:'CRM',          sub:'Reception',     color:'var(--br-crm)', caps:[
+    { name:'Onboarding Agent',    path:'/crm · multilingual',   type:'agent' },
+    { name:'Lead Tracker',        path:'/crm · pipeline',       type:'agent' },
+    { name:'Language Router',     path:'DE EN ES ZH VI',        type:'skill' },
+    { name:'First Contact Form',  path:'on email · phone',      type:'routine' },
+    { name:'Intake SOPs',         path:'/sops · static',        type:'manual' },
+    { name:'Follow-up Sequence',  path:'scheduled · cron',      type:'routine' },
+  ]},
+  { id:'sched', name:'Scheduling',   sub:'Termine',       color:'var(--br-sched)', caps:[
+    { name:'Appointment Agent',   path:'/sched · smart',        type:'agent' },
+    { name:'Coordination Agent',  path:'doctor · room · machine', type:'agent' },
+    { name:'Reminder Engine',     path:'scheduled · 48h · 24h', type:'routine' },
+    { name:'Slot Finder',         path:'availability · conflict', type:'skill' },
+    { name:'Calendar Sync',       path:'on event',              type:'routine' },
+    { name:'Booking Rules',       path:'/rules · static',       type:'manual' },
+  ]},
+  { id:'ehr',   name:'EHR',          sub:'Patientenakte', color:'var(--br-ehr)', caps:[
+    { name:'EHR Agent',           path:'/ehr · intranet only',  type:'agent' },
+    { name:'Anamnesis Agent',     path:'structured intake',     type:'agent' },
+    { name:'Consent Manager',     path:'DSGVO compliant',       type:'agent' },
+    { name:'Document Vault',      path:'AES-256 encrypted',     type:'skill' },
+    { name:'File Archival',       path:'on completion',         type:'routine' },
+    { name:'Consent Templates',   path:'/templates',            type:'manual' },
+  ]},
+  { id:'phys',  name:'Physician',    sub:'Ärztliches',    color:'var(--br-phys)', caps:[
+    { name:'Indication Agent',    path:'RAG · 20yr knowledge',  type:'agent' },
+    { name:'Diagnosis Support',   path:'evidence-based',        type:'agent' },
+    { name:'Therapy Planner',     path:'individualized',        type:'agent' },
+    { name:'Research Agent',      path:'PubMed · trials',       type:'agent' },
+    { name:'Case Similarity',     path:'vector search',         type:'skill' },
+    { name:'Clinical Protocols',  path:'/protocols',            type:'manual' },
+  ]},
+  { id:'lab',   name:'Laboratory',   sub:'LIS',           color:'var(--br-lab)', caps:[
+    { name:'Lab Order Agent',     path:'/lab · automated',      type:'agent' },
+    { name:'Result Interpreter',  path:'anomaly detection',     type:'agent' },
+    { name:'Sample Tracking',     path:'real-time',             type:'routine' },
+    { name:'Result Inbound',      path:'on lab event',          type:'routine' },
+    { name:'Value Validator',     path:'range check',           type:'skill' },
+    { name:'Lab Reference Ranges',path:'/reference',            type:'manual' },
+  ]},
+  { id:'treat', name:'Treatment',    sub:'Apherese',      color:'var(--br-treat)', caps:[
+    { name:'Cocktail Designer',   path:'/treat · proprietary',  type:'agent' },
+    { name:'Side-Effect Watch',   path:'live monitoring',       type:'agent' },
+    { name:'Protocol Writer',     path:'auto-documentation',    type:'agent' },
+    { name:'Machine Conductor',   path:'apherese config',       type:'agent' },
+    { name:'Vitals Stream',       path:'long-running · 6-7h',   type:'routine' },
+    { name:'Vita Veresset Recipes', path:'ICM secret · locked', type:'manual' },
+  ]},
+  { id:'fin',   name:'Finance',      sub:'ERP',           color:'var(--br-fin)', caps:[
+    { name:'Billing Agent',       path:'/fin · automated',      type:'agent' },
+    { name:'KPI Calculator',      path:'EBITDA · Cashflow',     type:'agent' },
+    { name:'Invoice Dispatch',    path:'on treatment done',     type:'routine' },
+    { name:'Payment Reconcile',   path:'scheduled · daily',     type:'routine' },
+    { name:'Tax Categorizer',     path:'DE accounting',         type:'skill' },
+    { name:'Pricing Rules',       path:'/pricing',              type:'manual' },
+  ]},
+  { id:'comp',  name:'Compliance',   sub:'DSGVO · Audit', color:'var(--br-comp)', caps:[
+    { name:'DSGVO Guardian',      path:'/audit · continuous',   type:'agent' },
+    { name:'Access Logger',       path:'on every action',       type:'routine' },
+    { name:'Audit Trail',         path:'immutable · signed',    type:'routine' },
+    { name:'RBAC Engine',         path:'role-based access',     type:'skill' },
+    { name:'MFA Enforcer',        path:'all medical users',     type:'skill' },
+    { name:'Compliance Docs',     path:'/compliance',           type:'manual' },
+  ]},
+  { id:'inv',   name:'Inventory',    sub:'Material',      color:'var(--br-inv)', caps:[
+    { name:'Stock Watcher',       path:'/inv · real-time',      type:'agent' },
+    { name:'Reorder Agent',       path:'auto-purchase',         type:'agent' },
+    { name:'Stock Threshold',     path:'on min-level',          type:'routine' },
+    { name:'Consumption Log',     path:'per treatment',         type:'routine' },
+    { name:'Supplier Matcher',    path:'price · delivery',      type:'skill' },
+    { name:'Supplier Contacts',   path:'/suppliers',            type:'manual' },
+  ]},
+  { id:'bi',    name:'Intelligence', sub:'BI · Learning', color:'var(--br-bi)', caps:[
+    { name:'Insights Agent',      path:'/bi · pattern-find',    type:'agent' },
+    { name:'Learning Agent',      path:'self-improving',        type:'agent' },
+    { name:'Weekly Report',       path:'scheduled · monday',    type:'routine' },
+    { name:'Outcome Tracker',     path:'long-running',          type:'routine' },
+    { name:'Cohort Analyzer',     path:'ethnic · age · sex',    type:'skill' },
+    { name:'License Templates',   path:'/license',              type:'manual' },
+  ]},
+];
+
+// ============================================================
+// ROLES — Branch-Level-Zugriff (full / read / limited / none)
+// ============================================================
+const roles = {
+  admin: { name:'Admin', color:'var(--gold)', desc:'Jackie & Laura · Vollzugriff',
+    access:{ crm:'full', sched:'full', ehr:'full', phys:'full', lab:'full', treat:'full', fin:'full', comp:'full', inv:'full', bi:'full' } },
+  doctor: { name:'Arzt', color:'var(--br-phys)', desc:'ICM-Ärzte · Klinische Arbeit',
+    access:{ crm:'read', sched:'read', ehr:'full', phys:'full', lab:'read', treat:'full', fin:'none', comp:'read', inv:'none', bi:'limited' } },
+  staff: { name:'Assistenz', color:'var(--br-sched)', desc:'MFA · Reception · Labor',
+    access:{ crm:'full', sched:'full', ehr:'read', phys:'none', lab:'read', treat:'limited', fin:'none', comp:'none', inv:'limited', bi:'none' } },
+  finance: { name:'Finance', color:'var(--br-fin)', desc:'Buchhaltung · Controlling',
+    access:{ crm:'limited', sched:'read', ehr:'none', phys:'none', lab:'none', treat:'none', fin:'full', comp:'none', inv:'full', bi:'read' } },
+  licensee: { name:'Lizenz-Arzt', color:'var(--br-treat)', desc:'Externe Praxis (z.B. Dr. Schwachen)',
+    access:{ crm:'limited', sched:'limited', ehr:'full', phys:'full', lab:'read', treat:'full', fin:'none', comp:'none', inv:'none', bi:'none' } },
+};
+
+const ACCESS_BADGE = { full:'F', read:'R', limited:'L', none:'—' };
+const ACCESS_LABEL = {
+  full:'Vollzugriff — lesen, schreiben, konfigurieren.',
+  read:'Lesezugriff — Daten sichtbar, aber nicht änderbar.',
+  limited:'Eingeschränkt — nur rollenrelevante Daten.',
+  none:'Kein Zugriff — durch die RBAC-Architektur gesperrt.'
+};
+
+// ============================================================
+// PATIENT JOURNEY — 8 Schritte
+// ============================================================
+const journey = [
+  { num:1, name:'Erstkontakt', agents:['Onboarding-Agent','Language Router','Lead Tracker'],
+    backend:['Erkennt Sprache & Intent','Erstellt CRM-Eintrag','Klassifiziert Anliegen'],
+    frontend:['Mehrsprachiges Formular','WhatsApp/Email-Integration','Sofortige Bestätigung'] },
+  { num:2, name:'Terminvorbereitung', agents:['Appointment-Agent','EHR-Agent','Anamnesis-Agent'],
+    backend:['Findet passenden Slot','Versendet Formulare digital','Fordert Vorbefunde an'],
+    frontend:['Patient-Portal mit Formularen','DSGVO-konforme Einwilligung','Upload-Funktion'] },
+  { num:3, name:'Anmeldung', agents:['EHR-Agent','Consent Manager'],
+    backend:['Verifiziert Identität','Konsolidiert digitale Akte','Aktiviert Behandlungs-Workflow'],
+    frontend:['Self-Check-In am Tablet','Foto-Verifikation','Status-Übersicht'] },
+  { num:4, name:'Ärztliches Gespräch', agents:['Indication-Agent','Research-Agent','Therapy Planner'],
+    backend:['Findet 12 ähnlichste Fälle','Holt relevante Studien','Schlägt Therapie vor'],
+    frontend:['Arzt-Dashboard mit Vorschlägen','Quellen-Links zu Studien','Ein-Klick-Entscheidung'] },
+  { num:5, name:'Diagnostik / Labor', agents:['Lab Order Agent','Result Interpreter','Sample Tracking'],
+    backend:['Erstellt Laborauftrag','Trackt Probenstatus','Bewertet Befunde automatisch'],
+    frontend:['Auftrag in einem Klick','Push bei Eingang','Visualisierte Auffälligkeiten'] },
+  { num:6, name:'Behandlung', agents:['Cocktail Designer','Side-Effect Watch','Protocol Writer','Machine Conductor'],
+    backend:['Schlägt Cocktail-Rezept vor','Live-Monitoring Vitalwerte','Frühwarnung bei Tetanie-Risiko'],
+    frontend:['Behandlungsraum-Display','Push-Warnung bei Risiko','Protokoll wird live geschrieben'] },
+  { num:7, name:'Abrechnung & Bericht', agents:['Billing Agent','KPI Calculator','Protocol Writer'],
+    backend:['Erfasst Leistungen','Erstellt Rechnung & Arztbrief','Verfolgt Zahlungseingang'],
+    frontend:['Rechnungs-Vorschau','KI-Entwurf des Berichts','Zahlungs-Status sichtbar'] },
+  { num:8, name:'Nachbetreuung', agents:['Insights-Agent','Learning-Agent','Outcome Tracker'],
+    backend:['Automatische Check-Ins','Erfasst Outcome-Daten','Erkennt Muster fürs Lern-System'],
+    frontend:['Patient-App mit Verlaufsfragen','Folgetermin-Vorschlag','Wöchentlicher Insights-Report'] },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentRole = 'admin';
+let currentStep = 1;
+
+// ============================================================
+// RENDER — Branch headers + system grid
+// ============================================================
+function renderArchitecture() {
+  const headers = document.getElementById('branchHeaders');
+  const grid = document.getElementById('systemGrid');
+
+  headers.innerHTML = branches.map(b => `
+    <div class="branch-header" id="bh-${b.id}" style="--branch-color: ${b.color};">
+      <span class="branch-badge" id="bb-${b.id}">F</span>
+      <div class="branch-name">${b.name}</div>
+      <div class="branch-sub">${b.sub}</div>
+    </div>
+  `).join('');
+
+  grid.innerHTML = branches.map(b => `
+    <div class="branch-column" id="bc-${b.id}" style="--branch-color: ${b.color};">
+      <div class="col-lock"><span class="col-lock-icon">🔒</span><span class="col-lock-text">Gesperrt</span></div>
+      ${b.caps.map(c => `
+        <div class="capability" data-branch="${b.id}">
+          <span class="capability-type ${c.type}"></span>
+          <div class="capability-name">${c.name}</div>
+          <div class="capability-path">${c.path}</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// RENDER — Role switcher
+// ============================================================
+function renderRoles() {
+  const c = document.getElementById('roleSwitcher');
+  c.innerHTML = Object.entries(roles).map(([key, r]) => `
+    <button class="role-btn ${key === currentRole ? 'active' : ''}" data-role="${key}" style="--role-color: ${r.color}">
+      <div class="role-name">${r.name}</div>
+      <div class="role-desc">${r.desc}</div>
+    </button>
+  `).join('');
+  c.querySelectorAll('.role-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentRole = btn.dataset.role; renderRoles(); applyRole(); });
+  });
+}
+
+// ============================================================
+// APPLY ROLE — dim/lock columns by access level
+// ============================================================
+function applyRole() {
+  const r = roles[currentRole];
+  branches.forEach(b => {
+    const acc = r.access[b.id] || 'none';
+    const col = document.getElementById('bc-' + b.id);
+    const head = document.getElementById('bh-' + b.id);
+    const badge = document.getElementById('bb-' + b.id);
+    col.classList.remove('acc-full','acc-read','acc-limited','acc-none');
+    head.classList.remove('acc-none');
+    col.classList.add('acc-' + acc);
+    if (acc === 'none') head.classList.add('acc-none');
+    badge.textContent = ACCESS_BADGE[acc];
+  });
+
+  // Access readout summary
+  const counts = { full:0, read:0, limited:0, none:0 };
+  branches.forEach(b => counts[r.access[b.id] || 'none']++);
+  const readout = document.getElementById('accessReadout');
+  readout.style.setProperty('--role-color', r.color);
+  readout.innerHTML = `
+    <span class="ar-role">${r.name}</span>
+    <span class="ar-text">
+      <strong>${counts.full}</strong> Module mit Vollzugriff ·
+      <strong>${counts.read}</strong> nur lesend ·
+      <strong>${counts.limited}</strong> eingeschränkt ·
+      <strong>${counts.none}</strong> gesperrt.
+      Jede Rolle sieht ausschließlich, was sie wirklich braucht — ein Lizenz-Arzt erreicht nie ICMs Cocktail-Rezepte oder Finanzen.
+    </span>
+  `;
+}
+
+// ============================================================
+// RENDER — Patient Journey
+// ============================================================
+function renderJourney() {
+  const c = document.getElementById('journeySteps');
+  c.innerHTML = journey.map(s => `
+    <div class="step ${s.num === currentStep ? 'active' : ''}" data-step="${s.num}">
+      <div class="step-num">0${s.num}</div>
+      <div class="step-name">${s.name}</div>
+    </div>
+  `).join('');
+  c.querySelectorAll('.step').forEach(el => {
+    el.addEventListener('click', () => { currentStep = parseInt(el.dataset.step); renderJourney(); });
+  });
+  renderStepDetail();
+}
+
+function renderStepDetail() {
+  const s = journey[currentStep - 1];
+  document.getElementById('stepDetail').innerHTML = `
+    <div class="step-detail-eyebrow">Schritt 0${s.num}</div>
+    <div class="step-detail-title">${s.name}</div>
+    <div class="step-agents">Aktive Agents: <span>${s.agents.join(' · ')}</span></div>
+    <div class="step-detail-content">
+      <div class="step-block">
+        <div class="step-block-title">Backend · Was im System passiert</div>
+        <ul>${s.backend.map(b => `<li>${b}</li>`).join('')}</ul>
+      </div>
+      <div class="step-block">
+        <div class="step-block-title">Frontend · Was der Nutzer sieht</div>
+        <ul>${s.frontend.map(f => `<li>${f}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const target = document.getElementById('view-' + view);
+  const tab = document.querySelector('.tab[data-view="' + view + '"]');
+  if (target) target.classList.add('active');
+  if (tab) tab.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
+
+// ============================================================
+// AGREEMENT (Micro-Commitment)
+// ============================================================
+let agreementLocked = false;
+const agreementBtn = document.getElementById('agreementBtn');
+agreementBtn.addEventListener('click', () => {
+  if (agreementLocked) return;
+  agreementLocked = true;
+  agreementBtn.classList.add('locked');
+  agreementBtn.setAttribute('aria-pressed', 'true');
+  document.getElementById('agIcon').textContent = '✓';
+  document.getElementById('agText').textContent = 'Upfront Contract eingeloggt · Die nächsten 45 Minuten gehören eurer Vision';
+  const hint = document.getElementById('agreementHint');
+  if (hint) hint.style.opacity = '0';
+  setTimeout(() => switchView('architecture'), 2000);
+});
+
+// ============================================================
+// INIT
+// ============================================================
+renderArchitecture();
+renderRoles();
+applyRole();
+renderJourney();
+</script>
+</body>
+</html>
