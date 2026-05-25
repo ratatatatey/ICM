@@ -80,9 +80,42 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
     padding-bottom: 18px;
     border-bottom: 1px solid var(--line);
     margin-bottom: 22px;
+  }
+
+  .lang-selector {
+    display: inline-flex;
+    gap: 8px;
+  }
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--bg-panel);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .lang-btn:hover {
+    border-color: var(--line-bright);
+    color: var(--text);
+  }
+  .lang-btn.active {
+    border-color: var(--gold);
+    color: var(--text);
+    background: var(--bg-card);
   }
 
   .brand { display: flex; align-items: baseline; gap: 12px; }
@@ -438,48 +471,141 @@
   .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 18px; }
 
   /* ============== TAB 3: PARTNERSHIP ============== */
-  .partner-intro { max-width: 780px; font-size: 13px; color: var(--text-dim); margin: 8px 0 28px; line-height: 1.6; }
-  .partner-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; margin-bottom: 28px; align-items: stretch; }
-  .scenario { position: relative; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 6px; padding: 32px; display: flex; flex-direction: column; }
-  .scenario.dimmed { opacity: 0.6; filter: grayscale(0.3); }
-  .scenario.dimmed:hover { opacity: 0.82; transition: opacity 0.3s ease; }
-  .scenario.highlight {
-    border: 1px solid var(--gold);
-    background: linear-gradient(160deg, var(--bg-panel), rgba(212,174,106,0.06));
-    box-shadow: 0 0 0 1px rgba(212,174,106,0.2), 0 0 60px rgba(212,174,106,0.12);
-    animation: partnerPulse 3s ease-in-out infinite;
+  .question-stage { text-align: center; padding: 44px 0 52px; }
+  .question-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 22px;
   }
-  @keyframes partnerPulse {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(212,174,106,0.18), 0 0 50px rgba(212,174,106,0.10); }
-    50% { box-shadow: 0 0 0 1px rgba(212,174,106,0.42), 0 0 84px rgba(212,174,106,0.26); }
+  .question-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 62px); font-weight: 600; line-height: 1.08;
+    color: var(--text); max-width: 860px; margin: 0 auto 20px;
   }
-  .scenario-badge { position: absolute; top: -11px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; padding: 5px 12px; border-radius: 2px; background: var(--gold); color: var(--bg); }
-  .scenario-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; }
-  .scenario.highlight .scenario-eyebrow { color: var(--gold); }
-  .scenario-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; line-height: 1.1; margin-bottom: 22px; }
-  .price-rows { border-top: 1px solid var(--line); margin-bottom: 20px; }
-  .price-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .price-label { font-size: 12px; color: var(--text-dim); letter-spacing: 0.03em; line-height: 1.4; }
-  .price-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text); white-space: nowrap; text-align: right; }
-  .scenario.highlight .price-value { color: var(--gold-bright); }
-  .price-value small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-top: 2px; }
-  .price-value.share { color: var(--success); }
-  .scenario-highlights { list-style: none; margin-top: 4px; }
-  .scenario-highlights li { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; padding: 6px 0 6px 22px; position: relative; }
-  .scenario.dimmed .scenario-highlights li::before { content: '–'; position: absolute; left: 4px; color: var(--text-faint); }
-  .scenario.highlight .scenario-highlights li { color: var(--text); }
-  .scenario.highlight .scenario-highlights li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+  .question-sub {
+    font-size: 14px; color: var(--text-dim); max-width: 540px;
+    margin: 0 auto; line-height: 1.65;
+  }
 
-  .funding-banner {
-    display: flex; align-items: center; gap: 20px;
-    background: linear-gradient(135deg, rgba(111,174,127,0.12), rgba(212,174,106,0.08));
-    border: 1px solid var(--success); border-radius: 6px; padding: 24px 32px;
-    box-shadow: 0 0 40px rgba(111,174,127,0.10);
+  .dimension-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+  .dimension-card {
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 28px 32px; cursor: pointer; text-align: left;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: all 0.25s ease; font-family: inherit; position: relative; overflow: hidden;
   }
-  .funding-icon { font-size: 28px; color: var(--success); flex-shrink: 0; line-height: 1; }
-  .funding-text { font-size: 14px; line-height: 1.6; color: var(--text); }
-  .funding-text strong { color: var(--success); font-weight: 700; letter-spacing: 0.04em; }
-  .funding-text .figure { color: var(--gold-bright); font-weight: 600; }
+  .dimension-card:hover { border-color: var(--line-bright); background: var(--bg-card); }
+  .dimension-card.selected {
+    border-color: var(--gold);
+    background: linear-gradient(160deg, var(--bg-card), rgba(212,174,106,0.07));
+    box-shadow: 0 0 0 1px rgba(212,174,106,0.2), 0 8px 32px rgba(212,174,106,0.10);
+  }
+  .dimension-card.selected::after {
+    content: ''; position: absolute; left: 0; top: 0;
+    width: 3px; height: 100%; background: var(--gold);
+  }
+  .dim-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dim);
+    transition: color 0.25s;
+  }
+  .dimension-card.selected .dim-num { color: var(--gold); }
+  .dim-title { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; color: var(--text); line-height: 1.15; }
+  .dim-text { font-size: 12.5px; color: var(--text-dim); line-height: 1.65; }
+  .dimension-card.selected .dim-text { color: var(--text); }
+
+  .vision-readout {
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 18px 26px; min-height: 58px; display: flex; align-items: center;
+    gap: 10px; flex-wrap: wrap; transition: border-color 0.3s;
+  }
+  .vision-readout.has-selection { border-color: var(--line-bright); }
+  .vision-idle { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--text-faint); }
+  .vision-tag {
+    display: inline-flex; align-items: center; padding: 5px 14px;
+    border: 1px solid var(--gold-dim); border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--gold-bright);
+    background: rgba(212,174,106,0.08);
+    animation: tagIn 0.22s ease;
+  }
+  @keyframes tagIn { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+
+  /* ============== LOGIN OVERLAY ============== */
+  .login-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .login-overlay::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(212,174,106,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,174,106,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    pointer-events: none;
+  }
+  .login-box {
+    position: relative; z-index: 1;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 52px 48px 44px;
+    width: 100%; max-width: 420px;
+    box-shadow: 0 0 0 1px rgba(212,174,106,0.08), 0 32px 80px rgba(0,0,0,0.5);
+  }
+  .login-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--text); margin-bottom: 4px; text-align: center;
+  }
+  .login-brand .sep { color: var(--gold); margin: 0 5px; font-weight: 500; }
+  .login-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--text-faint); text-align: center; margin-bottom: 40px;
+  }
+  .login-field { margin-bottom: 16px; }
+  .login-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--text-faint); display: block; margin-bottom: 8px;
+  }
+  .login-input {
+    width: 100%; background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 4px; padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--text); outline: none;
+    transition: border-color 0.2s;
+  }
+  .login-input:focus { border-color: var(--gold); }
+  .login-input.error { border-color: var(--danger); }
+  .login-error {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: var(--danger); margin-top: 12px;
+    min-height: 16px; text-align: center;
+  }
+  .login-btn {
+    width: 100%; margin-top: 28px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    border-radius: 4px; padding: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .login-btn:hover { background: rgba(212,174,106,0.08); }
+  .login-btn:active { transform: scale(0.98); }
+  .login-overlay.fade-out {
+    animation: loginFade 0.5s ease forwards;
+  }
+  @keyframes loginFade {
+    to { opacity: 0; pointer-events: none; }
+  }
 
   /* ============== FOOTER ============== */
   .footer { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); }
@@ -488,10 +614,9 @@
   @media (max-width: 1100px) {
     .tabs { grid-template-columns: 1fr; }
     .reset-cards { grid-template-columns: 1fr; max-width: 560px; }
-    .partner-grid { grid-template-columns: 1fr; }
+    .dimension-grid { grid-template-columns: 1fr; }
     .role-switcher { grid-template-columns: repeat(2, 1fr); }
     .agreement { min-width: 0; width: 100%; }
-    .funding-banner { flex-direction: column; text-align: center; }
     .step-detail-content { grid-template-columns: 1fr; }
     .flow-stages { grid-template-columns: 1fr; gap: 8px; }
     .flow-arrow { transform: rotate(90deg); height: 24px; }
@@ -499,61 +624,84 @@
 </style>
 </head>
 <body>
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-brand">Work&nbsp;Zero<span class="sep">×</span>ICM Intelligence</div>
+    <div class="login-tag">Agentic OS · Closing Workspace</div>
+    <div class="login-field">
+      <label class="login-label" for="loginUser">Benutzername</label>
+      <input class="login-input" id="loginUser" type="text" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="login-field">
+      <label class="login-label" for="loginPass">Passwort</label>
+      <input class="login-input" id="loginPass" type="password" autocomplete="off">
+    </div>
+    <div class="login-error" id="loginError"></div>
+    <button class="login-btn" id="loginBtn">Zugang bestätigen</button>
+  </div>
+</div>
+
 <div class="frame">
 
   <!-- TOP BAR -->
   <div class="topbar">
     <div class="brand">
       <span class="brand-mark">Work&nbsp;Zero<span class="sep">×</span>ICM Intelligence</span>
-      <span class="brand-tag">Agentic OS · Closing Workspace</span>
+      <span class="brand-tag" id="brandTag">Agentic OS · Closing Workspace</span>
+    </div>
+    <div class="lang-selector" id="langSelector">
+      <button class="lang-btn active" data-lang="de">DE</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
     </div>
     <div class="status-pill">
       <span class="status-dot"></span>
-      Engine State: <strong>Ready for Deployment</strong>
+      <span id="statusText">Engine State: <strong>Ready for Deployment</strong></span>
     </div>
   </div>
 
   <!-- TAB NAVIGATION -->
   <nav class="tabs" id="tabs">
     <button class="tab" data-view="reset">
-      <span class="tab-index">01 / The Reset</span>
-      <span class="tab-label">Der Upfront Contract</span>
-      <div class="tab-sub">Minuten 0–5 · Den Rahmen setzen</div>
+      <span class="tab-index" id="tabResetIndex">01 / The Reset</span>
+      <span class="tab-label" id="tabResetLabel">Der Upfront Contract</span>
+      <div class="tab-sub" id="tabResetSub">Minuten 0–5 · Den Rahmen setzen</div>
     </button>
     <button class="tab active" data-view="architecture">
-      <span class="tab-index">02 / The Architecture</span>
-      <span class="tab-label">Das Agentic OS</span>
-      <div class="tab-sub">Minuten 5–30 · Rollen, Journey, Datenfluss</div>
+      <span class="tab-index" id="tabArchitectureIndex">02 / The Architecture</span>
+      <span class="tab-label" id="tabArchitectureLabel">Das Agentic OS</span>
+      <div class="tab-sub" id="tabArchitectureSub">Minuten 5–30 · Rollen, Journey, Datenfluss</div>
     </button>
     <button class="tab" data-view="partnership">
-      <span class="tab-index">03 / The Partnership</span>
-      <span class="tab-label">Das Closing</span>
-      <div class="tab-sub">Minuten 30–45 · Pricing & Risk Reversal</div>
+      <span class="tab-index" id="tabPartnershipIndex">03 / The Partnership</span>
+      <span class="tab-label" id="tabPartnershipLabel">Das Closing</span>
+      <div class="tab-sub" id="tabPartnershipSub">Minuten 30–45 · Pricing & Risk Reversal</div>
     </button>
   </nav>
 
   <!-- ==================== VIEW 01: RESET ==================== -->
   <div class="view" id="view-reset">
     <div class="reset-stage">
-      <div class="reset-eyebrow">Upfront Contract · Min 00–05</div>
-      <h2 class="reset-headline">Extreme Ownership. <span class="muted">Klarheit vor jeder Zeile Code.</span></h2>
-      <p class="reset-sub">Drei Säulen. Eine Vereinbarung. Bevor wir starten, einigen wir uns auf die Spielregeln der nächsten 45 Minuten.</p>
+      <div class="reset-eyebrow" id="resetEyebrow">Upfront Contract · Min 00–05</div>
+      <h2 class="reset-headline" id="resetHeadline">Extreme Ownership. <span class="muted" id="resetHeadlineMuted">Klarheit vor jeder Zeile Code.</span></h2>
+      <p class="reset-sub" id="resetSub">Drei Säulen. Eine Vereinbarung. Bevor wir starten, einigen wir uns auf die Spielregeln der nächsten 45 Minuten.</p>
 
       <div class="reset-cards">
         <article class="glass-card">
-          <h3>01 / Der Reset</h3>
-          <span class="glass-sub">Das Eingeständnis</span>
-          <p>Letztes Mal haben wir euch mit Tech-Details erschlagen. Das war unser Fehler. Heute machen wir das Gegenteil: Wir reduzieren die Komplexität auf null und sprechen ausschließlich über euren Praxisalltag.</p>
+          <h3 id="card1Title">01 / Der Reset</h3>
+          <span class="glass-sub" id="card1Subtitle">Das Eingeständnis</span>
+          <p id="card1Text">Letztes Mal haben wir euch mit Tech-Details erschlagen. Das war unser Fehler. Heute machen wir das Gegenteil: Wir reduzieren die Komplexität auf null und sprechen ausschließlich über euren Praxisalltag.</p>
         </article>
         <article class="glass-card">
-          <h3>02 / Die Struktur</h3>
-          <span class="glass-sub">Die Spielregeln</span>
-          <p>Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares <strong>„Ja"</strong> oder <strong>„Nein"</strong> zu dieser Struktur.</p>
+          <h3 id="card2Title">02 / Die Struktur</h3>
+          <span class="glass-sub" id="card2Subtitle">Die Spielregeln</span>
+          <p id="card2Text">Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares <strong>„Ja"</strong> oder <strong>„Nein"</strong> zu dieser Struktur.</p>
         </article>
         <article class="glass-card">
-          <h3>03 / Das Commitment</h3>
-          <span class="glass-sub">Das Ziel</span>
-          <p>Wenn wir am Ende zu 100% aligned sind, legen wir den Grundstein für die kommerzielle Umsetzung und starten sofort die Delivery.</p>
+          <h3 id="card3Title">03 / Das Commitment</h3>
+          <span class="glass-sub" id="card3Subtitle">Das Ziel</span>
+          <p id="card3Text">Wenn wir am Ende zu 100% aligned sind, legen wir den Grundstein für die kommerzielle Umsetzung und starten sofort die Delivery.</p>
         </article>
       </div>
 
@@ -570,20 +718,20 @@
 
     <div class="arch-head">
       <div>
-        <div class="section-label">Das digitale Betriebssystem der Klinik</div>
-        <h2 class="panel-title">Agentic OS · Live-Rollenansicht</h2>
+        <div class="section-label" id="architectureSectionLabel">Das digitale Betriebssystem der Klinik</div>
+        <h2 class="panel-title" id="architecturePanelTitle">Agentic OS · Live-Rollenansicht</h2>
       </div>
       <div class="type-legend">
-        <span class="type-pill manual"><span class="dot"></span>Manual</span>
-        <span class="type-pill skill"><span class="dot"></span>Skill</span>
-        <span class="type-pill routine"><span class="dot"></span>Routine</span>
-        <span class="type-pill agent"><span class="dot"></span>Agent</span>
+        <span class="type-pill manual" id="typeManual"><span class="dot"></span>Manual</span>
+        <span class="type-pill skill" id="typeSkill"><span class="dot"></span>Skill</span>
+        <span class="type-pill routine" id="typeRoutine"><span class="dot"></span>Routine</span>
+        <span class="type-pill agent" id="typeAgent"><span class="dot"></span>Agent</span>
       </div>
     </div>
 
     <!-- ROLE SWITCHER -->
     <div class="role-bar">
-      <div class="section-label">Rolle wählen — die Architektur passt sich live an</div>
+      <div class="section-label" id="roleSectionLabel">Rolle wählen — die Architektur passt sich live an</div>
       <div class="role-switcher" id="roleSwitcher"><!-- JS --></div>
     </div>
 
@@ -610,8 +758,8 @@
               </svg>
             </div>
             <div class="conductor-text">
-              <div class="conductor-title">The Orchestrator</div>
-              <div class="conductor-sub">Routes every task to the right agent</div>
+              <div class="conductor-title" id="conductorTitle">The Orchestrator</div>
+              <div class="conductor-sub" id="conductorSub">Routes every task to the right agent</div>
             </div>
           </div>
         </div>
@@ -624,19 +772,19 @@
 
         <!-- Automation layer -->
         <div class="automation">
-          <div class="automation-label">Automation Layer · Wann läuft was</div>
+          <div class="automation-label" id="automationLabel">Automation Layer · Wann läuft was</div>
           <div class="automation-triggers">
-            <span class="trigger">on-demand · user trigger</span>
-            <span class="trigger">scheduled · cron</span>
-            <span class="trigger">on-event · phone · email · result</span>
-            <span class="trigger">long-running · treatment</span>
-            <span class="trigger">on-threshold · stock · vitals</span>
+            <span class="trigger" id="trigger1">on-demand · user trigger</span>
+            <span class="trigger" id="trigger2">scheduled · cron</span>
+            <span class="trigger" id="trigger3">on-event · phone · email · result</span>
+            <span class="trigger" id="trigger4">long-running · treatment</span>
+            <span class="trigger" id="trigger5">on-threshold · stock · vitals</span>
           </div>
         </div>
 
         <!-- Integrations -->
         <div class="integrations">
-          <div class="integrations-label">Tools · Integrations · Software Assets</div>
+          <div class="integrations-label" id="integrationsLabel">Tools · Integrations · Software Assets</div>
           <div class="integrations-row">
             <div class="integration-item"><div class="integration-icon" style="--int-color: #D4AE6A;">L</div><div class="integration-name">Llama 3.3</div></div>
             <div class="integration-item"><div class="integration-icon" style="--int-color: #6FA8DC;">Q</div><div class="integration-name">Qwen 2.5</div></div>
@@ -657,40 +805,40 @@
 
     <!-- PATIENT JOURNEY -->
     <section class="journey-section">
-      <div class="section-label">Patient Journey</div>
-      <h2 class="panel-title">Wie die Agents zusammenarbeiten</h2>
+      <div class="section-label" id="journeySectionLabel">Patient Journey</div>
+      <h2 class="panel-title" id="journeyPanelTitle">Wie die Agents zusammenarbeiten</h2>
       <div class="journey-steps" id="journeySteps"><!-- JS --></div>
       <div class="step-detail" id="stepDetail"><!-- JS --></div>
     </section>
 
     <!-- DATA FLOW -->
     <section class="flow-section">
-      <div class="section-label">Datenfluss</div>
-      <h2 class="panel-title">Was passiert, wenn neue Patientendaten ankommen</h2>
+      <div class="section-label" id="flowSectionLabel">Datenfluss</div>
+      <h2 class="panel-title" id="flowPanelTitle">Was passiert, wenn neue Patientendaten ankommen</h2>
       <div class="flow-diagram">
         <div class="flow-stages">
           <div class="flow-stage">
-            <div class="flow-stage-label">Eingang</div>
-            <div class="flow-stage-title">Patient ruft an</div>
-            <div class="flow-stage-desc">„Hallo, ich habe Lyme-Disease und möchte Vita Veresset machen."</div>
+            <div class="flow-stage-label" id="flow1Label">Eingang</div>
+            <div class="flow-stage-title" id="flow1Title">Patient ruft an</div>
+            <div class="flow-stage-desc" id="flow1Desc">„Hallo, ich habe Lyme-Disease und möchte Vita Veresset machen."</div>
           </div>
           <div class="flow-arrow">→</div>
           <div class="flow-stage">
-            <div class="flow-stage-label">Orchestrator</div>
-            <div class="flow-stage-title">Routing</div>
-            <div class="flow-stage-desc">Erkennt: Erstkontakt, Indikation, Sprachenwahl. Aktiviert Onboarding-Agent.</div>
+            <div class="flow-stage-label" id="flow2Label">Orchestrator</div>
+            <div class="flow-stage-title" id="flow2Title">Routing</div>
+            <div class="flow-stage-desc" id="flow2Desc">Erkennt: Erstkontakt, Indikation, Sprachenwahl. Aktiviert Onboarding-Agent.</div>
           </div>
           <div class="flow-arrow">→</div>
           <div class="flow-stage">
-            <div class="flow-stage-label">Agents arbeiten</div>
-            <div class="flow-stage-title">Parallel</div>
-            <div class="flow-stage-desc">Onboarding erfasst Daten, Indikations-Agent sucht ähnliche Fälle, Research-Agent findet Evidenz.</div>
+            <div class="flow-stage-label" id="flow3Label">Agents arbeiten</div>
+            <div class="flow-stage-title" id="flow3Title">Parallel</div>
+            <div class="flow-stage-desc" id="flow3Desc">Onboarding erfasst Daten, Indikations-Agent sucht ähnliche Fälle, Research-Agent findet Evidenz.</div>
           </div>
           <div class="flow-arrow">→</div>
           <div class="flow-stage">
-            <div class="flow-stage-label">Ablage</div>
-            <div class="flow-stage-title">Strukturiert</div>
-            <div class="flow-stage-desc">CRM-Eintrag, EHR-Akte, Termin-Vorschlag, Vorab-Indikation für Arzt — alles automatisch.</div>
+            <div class="flow-stage-label" id="flow4Label">Ablage</div>
+            <div class="flow-stage-title" id="flow4Title">Strukturiert</div>
+            <div class="flow-stage-desc" id="flow4Desc">CRM-Eintrag, EHR-Akte, Termin-Vorschlag, Vorab-Indikation für Arzt — alles automatisch.</div>
           </div>
         </div>
       </div>
@@ -700,57 +848,47 @@
 
   <!-- ==================== VIEW 03: PARTNERSHIP ==================== -->
   <div class="view" id="view-partnership">
-    <div class="section-label">Minuten 30–45 · Das Finale</div>
-    <h2 class="panel-title">Der Investitionsrahmen & die Risiko-Umkehr</h2>
-    <p class="partner-intro">Zwei Wege, dasselbe System zu bekommen. Der eine macht uns zum austauschbaren Dienstleister. Der andere macht uns zu Partnern, die mit euch ins Risiko gehen — Skin in the Game auf Augenhöhe.</p>
+    <div class="section-label" id="partnershipSectionLabel">Minuten 30–45 · Die entscheidende Frage</div>
+    <h2 class="panel-title" id="partnershipPanelTitle">Die Partnerschaftsfrage</h2>
 
-    <div class="partner-grid">
-      <!-- Option A -->
-      <div class="scenario dimmed">
-        <div class="scenario-eyebrow">Option A</div>
-        <div class="scenario-title">Das klassische Agenturmodell</div>
-        <div class="price-rows">
-          <div class="price-row"><span class="price-label">Setup-Gebühr</span><span class="price-value">80.000 €</span></div>
-          <div class="price-row"><span class="price-label">Laufender Retainer</span><span class="price-value">8.500 €<small>/ Monat</small></span></div>
-        </div>
-        <ul class="scenario-highlights">
-          <li>Reine Dienstleistung</li>
-          <li>Einmalige Code-Übergabe</li>
-          <li>Volles Betriebs- und Supportrisiko bei der Klinik</li>
-          <li>Keine gemeinsame Skalierung</li>
-        </ul>
-      </div>
-
-      <!-- Option B -->
-      <div class="scenario highlight">
-        <span class="scenario-badge">Empfohlen</span>
-        <div class="scenario-eyebrow">Option B</div>
-        <div class="scenario-title">Die strategische Torus-Partnerschaft</div>
-        <div class="price-rows">
-          <div class="price-row"><span class="price-label">Setup-Investition</span><span class="price-value">38.500 €</span></div>
-          <div class="price-row"><span class="price-label">Enterprise Hosting & AI Safety</span><span class="price-value">4.800 €<small>/ Monat</small></span></div>
-          <div class="price-row"><span class="price-label">Skalierungs-Hebel</span><span class="price-value share">20%<small>Revenue Share · Drittarzt-Lizenzen</small></span></div>
-        </div>
-        <ul class="scenario-highlights">
-          <li>Gemeinsames Skin in the Game</li>
-          <li>Work Zero trägt das technologische Risiko</li>
-          <li>Voller Fokus auf die weltweite Lizenzierung an Drittärzte (z.B. Dr. Schwachen, Kathi Düsterhöft)</li>
-        </ul>
-      </div>
+    <div class="question-stage">
+      <div class="question-eyebrow" id="partnershipEyebrow">Kein Pitch mehr — eure Worte.</div>
+      <h3 class="question-headline" id="partnershipQuestion">Wie stellt ihr euch eine Partnerschaft vor?</h3>
+      <p class="question-sub" id="partnershipSub">Wählt die Dimensionen, die eure Vorstellung am besten beschreiben — wir richten uns danach aus.</p>
     </div>
 
-    <div class="funding-banner">
-      <span class="funding-icon">⚡</span>
-      <p class="funding-text">
-        <strong>TORUS CAPITAL HACK:</strong> Über unsere Förder-Unit (Akuna/Inteli) rufen wir bis zu <span class="figure">30.000 €</span> staatlichen Lohnkostenzuschuss pro Kopf für euer Team ab. Das Setup von <span class="figure">38.500 €</span> refinanziert sich für eure Klinik faktisch von selbst und ist sofort Cashflow-positiv.
-      </p>
+    <div class="dimension-grid">
+      <button class="dimension-card" onclick="toggleDimension(this, 1)">
+        <span class="dim-num" id="dim1Num">01 / Dimension</span>
+        <span class="dim-title" id="dim1Title">Technologischer Mitgestalter</span>
+        <span class="dim-text" id="dim1Text">Ihr seid aktiv in Architektur-Entscheidungen eingebunden. Wir bauen zusammen, nicht für euch.</span>
+      </button>
+      <button class="dimension-card" onclick="toggleDimension(this, 2)">
+        <span class="dim-num" id="dim2Num">02 / Dimension</span>
+        <span class="dim-title" id="dim2Title">Revenue-Partner</span>
+        <span class="dim-text" id="dim2Text">Gemeinsames Skin in the Game — wir teilen Risiko und Upside bei der globalen Lizenzierung an Drittärzte.</span>
+      </button>
+      <button class="dimension-card" onclick="toggleDimension(this, 3)">
+        <span class="dim-num" id="dim3Num">03 / Dimension</span>
+        <span class="dim-title" id="dim3Title">Klare Übergabe & Ownership</span>
+        <span class="dim-text" id="dim3Text">Setup, Aufbau, dann gehört das System euch. Volle Kontrolle, volle Unabhängigkeit.</span>
+      </button>
+      <button class="dimension-card" onclick="toggleDimension(this, 4)">
+        <span class="dim-num" id="dim4Num">04 / Dimension</span>
+        <span class="dim-title" id="dim4Title">Langfristiger Innovationspartner</span>
+        <span class="dim-text" id="dim4Text">Kontinuierlicher Ausbau, gemeinsame Iteration — das System wächst mit eurer Klinik und Vision.</span>
+      </button>
+    </div>
+
+    <div class="vision-readout" id="visionReadout">
+      <span class="vision-idle" id="visionIdle">Klickt auf die Dimensionen, um eure Vorstellung zu formen.</span>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div><span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3</div>
-    <div>Work Zero × Satter · Für Jaqueline Orizabal & Laura</div>
+    <div id="footerLeft"><span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3</div>
+    <div id="footerRight">Work Zero × Satter · Für Jaqueline Orizabal & Laura</div>
   </div>
 
 </div>
@@ -901,25 +1039,454 @@ const journey = [
 // ============================================================
 let currentRole = 'admin';
 let currentStep = 1;
+let currentLang = 'de';
 
 // ============================================================
-// RENDER — Branch headers + system grid
+// TRANSLATIONS
+// ============================================================
+const translations = {
+  de: {
+    pageTitle: 'ICM Intelligence — Agentic OS · Closing Workspace',
+    brandTag: 'Agentic OS · Closing Workspace',
+    statusText: 'Engine State: <strong>Ready for Deployment</strong>',
+    tabs: {
+      reset: { index: '01 / The Reset', label: 'Der Upfront Contract', sub: 'Minuten 0–5 · Den Rahmen setzen' },
+      architecture: { index: '02 / The Architecture', label: 'Das Agentic OS', sub: 'Minuten 5–30 · Rollen, Journey, Datenfluss' },
+      partnership: { index: '03 / The Partnership', label: 'Die Partnerschaftsfrage', sub: 'Minuten 30–45 · Eure Vorstellung' },
+    },
+    reset: {
+      eyebrow: 'Upfront Contract · Min 00–05',
+      headline: 'Extreme Ownership.',
+      headlineMuted: 'Klarheit vor jeder Zeile Code.',
+      sub: 'Drei Säulen. Eine Vereinbarung. Bevor wir starten, einigen wir uns auf die Spielregeln der nächsten 45 Minuten.',
+      cards: [
+        { title: '01 / Der Reset', subtitle: 'Das Eingeständnis', text: 'Letztes Mal haben wir euch mit Tech-Details erschlagen. Das war unser Fehler. Heute machen wir das Gegenteil: Wir reduzieren die Komplexität auf null und sprechen ausschließlich über euren Praxisalltag.' },
+        { title: '02 / Die Struktur', subtitle: 'Die Spielregeln', text: 'Wir gehen jetzt gemeinsam durch eure visualisierte Patient Journey und die Rollenverteilung. Unser Ziel für heute ist ein klares „Ja" oder „Nein" zu dieser Struktur.' },
+        { title: '03 / Das Commitment', subtitle: 'Das Ziel', text: 'Wenn wir am Ende zu 100% aligned sind, legen wir den Grundstein für die kommerzielle Umsetzung und starten sofort die Delivery.' },
+      ],
+      agreement: 'Vereinbarung aktivieren: Klicken für Micro-Commitment',
+      agreementLocked: 'Upfront Contract aktiviert · Die nächsten 45 Minuten gehören eurer Vision',
+      hint: 'Ein Klick besiegelt den Rahmen — unverbindlich, aber verbindend',
+    },
+    architecture: {
+      sectionLabel: 'Das digitale Betriebssystem der Klinik',
+      panelTitle: 'Agentic OS · Live-Rollenansicht',
+      typeLegend: ['Manual', 'Skill', 'Routine', 'Agent'],
+      roleSectionLabel: 'Rolle wählen — die Architektur passt sich live an',
+      conductorTitle: 'The Orchestrator',
+      conductorSub: 'Routes every task to the right agent',
+      automationLabel: 'Automation Layer · Wann läuft was',
+      triggers: ['on-demand · user trigger', 'scheduled · cron', 'on-event · phone · email · result', 'long-running · treatment', 'on-threshold · stock · vitals'],
+      integrationsLabel: 'Tools · Integrations · Software Assets',
+      branchSubs: {
+        crm: 'Reception',
+        sched: 'Termine',
+        ehr: 'Patientenakte',
+        phys: 'Ärztliches',
+        lab: 'LIS',
+        treat: 'Apherese',
+        fin: 'ERP',
+        comp: 'DSGVO · Audit',
+        inv: 'Material',
+        bi: 'BI · Learning',
+      },
+      colLockText: 'Gesperrt',
+    },
+    journey: {
+      sectionLabel: 'Patient Journey',
+      title: 'Wie die Agents zusammenarbeiten',
+      stepLabels: { backend: 'Backend · Was im System passiert', frontend: 'Frontend · Was der Nutzer sieht', stepPrefix: 'Schritt', activeAgents: 'Aktive Agents:' },
+      steps: [
+        { num:1, name:'Erstkontakt', agents:['Onboarding-Agent','Language Router','Lead Tracker'], backend:['Erkennt Sprache & Intent','Erstellt CRM-Eintrag','Klassifiziert Anliegen'], frontend:['Mehrsprachiges Formular','WhatsApp/Email-Integration','Sofortige Bestätigung'] },
+        { num:2, name:'Terminvorbereitung', agents:['Appointment-Agent','EHR-Agent','Anamnesis-Agent'], backend:['Findet passenden Slot','Versendet Formulare digital','Fordert Vorbefunde an'], frontend:['Patient-Portal mit Formularen','DSGVO-konforme Einwilligung','Upload-Funktion'] },
+        { num:3, name:'Anmeldung', agents:['EHR-Agent','Consent Manager'], backend:['Verifiziert Identität','Konsolidiert digitale Akte','Aktiviert Behandlungs-Workflow'], frontend:['Self-Check-In am Tablet','Foto-Verifikation','Status-Übersicht'] },
+        { num:4, name:'Ärztliches Gespräch', agents:['Indication-Agent','Research-Agent','Therapy Planner'], backend:['Findet 12 ähnlichste Fälle','Holt relevante Studien','Schlägt Therapie vor'], frontend:['Arzt-Dashboard mit Vorschlägen','Quellen-Links zu Studien','Ein-Klick-Entscheidung'] },
+        { num:5, name:'Diagnostik / Labor', agents:['Lab Order Agent','Result Interpreter','Sample Tracking'], backend:['Erstellt Laborauftrag','Trackt Probenstatus','Bewertet Befunde automatisch'], frontend:['Auftrag in einem Klick','Push bei Eingang','Visualisierte Auffälligkeiten'] },
+        { num:6, name:'Behandlung', agents:['Cocktail Designer','Side-Effect Watch','Protocol Writer','Machine Conductor'], backend:['Schlägt Cocktail-Rezept vor','Live-Monitoring Vitalwerte','Frühwarnung bei Tetanie-Risiko'], frontend:['Behandlungsraum-Display','Push-Warnung bei Risiko','Protokoll wird live geschrieben'] },
+        { num:7, name:'Abrechnung & Bericht', agents:['Billing Agent','KPI Calculator','Protocol Writer'], backend:['Erfasst Leistungen','Erstellt Rechnung & Arztbrief','Verfolgt Zahlungseingang'], frontend:['Rechnungs-Vorschau','KI-Entwurf des Berichts','Zahlungs-Status sichtbar'] },
+        { num:8, name:'Nachbetreuung', agents:['Insights-Agent','Learning-Agent','Outcome Tracker'], backend:['Automatische Check-Ins','Erfasst Outcome-Daten','Erkennt Muster fürs Lern-System'], frontend:['Patient-App mit Verlaufsfragen','Folgetermin-Vorschlag','Wöchentlicher Insights-Report'] },
+      ],
+    },
+    flow: {
+      sectionLabel: 'Datenfluss',
+      title: 'Was passiert, wenn neue Patientendaten ankommen',
+      stages: [
+        { label:'Eingang', title:'Patient ruft an', desc:'„Hallo, ich habe Lyme-Disease und möchte Vita Veresset machen."' },
+        { label:'Orchestrator', title:'Routing', desc:'Erkennt: Erstkontakt, Indikation, Sprachenwahl. Aktiviert Onboarding-Agent.' },
+        { label:'Agents arbeiten', title:'Parallel', desc:'Onboarding erfasst Daten, Indikations-Agent sucht ähnliche Fälle, Research-Agent findet Evidenz.' },
+        { label:'Ablage', title:'Strukturiert', desc:'CRM-Eintrag, EHR-Akte, Termin-Vorschlag, Vorab-Indikation für Arzt — alles automatisch.' },
+      ],
+    },
+    partnership: {
+      sectionLabel: 'Minuten 30–45 · Die entscheidende Frage',
+      panelTitle: 'Die Partnerschaftsfrage',
+      eyebrow: 'Kein Pitch mehr — eure Worte.',
+      question: 'Wie stellt ihr euch eine Partnerschaft vor?',
+      sub: 'Wählt die Dimensionen, die eure Vorstellung am besten beschreiben — wir richten uns danach aus.',
+      idle: 'Klickt auf die Dimensionen, um eure Vorstellung zu formen.',
+      dims: [
+        { num: '01 / Dimension', title: 'Technologischer Mitgestalter', text: 'Ihr seid aktiv in Architektur-Entscheidungen eingebunden. Wir bauen zusammen, nicht für euch.' },
+        { num: '02 / Dimension', title: 'Revenue-Partner', text: 'Gemeinsames Skin in the Game — wir teilen Risiko und Upside bei der globalen Lizenzierung an Drittärzte.' },
+        { num: '03 / Dimension', title: 'Klare Übergabe & Ownership', text: 'Setup, Aufbau, dann gehört das System euch. Volle Kontrolle, volle Unabhängigkeit.' },
+        { num: '04 / Dimension', title: 'Langfristiger Innovationspartner', text: 'Kontinuierlicher Ausbau, gemeinsame Iteration — das System wächst mit eurer Klinik und Vision.' },
+      ],
+    },
+    footer: {
+      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3',
+      right: 'Work Zero × Satter · Für Jaqueline Orizabal & Laura',
+    },
+    accessSummary: '<strong>{full}</strong> Module mit Vollzugriff · <strong>{read}</strong> nur lesend · <strong>{limited}</strong> eingeschränkt · <strong>{none}</strong> gesperrt. Jede Rolle sieht ausschließlich, was sie wirklich braucht — ein Lizenz-Arzt erreicht nie ICMs Cocktail-Rezepte oder Finanzen.',
+  },
+  en: {
+    pageTitle: 'ICM Intelligence — Agentic OS · Closing Workspace',
+    brandTag: 'Agentic OS · Closing Workspace',
+    statusText: 'Engine State: <strong>Ready for Deployment</strong>',
+    tabs: {
+      reset: { index: '01 / The Reset', label: 'The Upfront Contract', sub: 'Minutes 0–5 · Set the frame' },
+      architecture: { index: '02 / The Architecture', label: 'The Agentic OS', sub: 'Minutes 5–30 · Roles, journey, data flow' },
+      partnership: { index: '03 / The Partnership', label: 'The Partnership Question', sub: 'Minutes 30–45 · Your vision' },
+    },
+    reset: {
+      eyebrow: 'Upfront Contract · Min 00–05',
+      headline: 'Extreme Ownership.',
+      headlineMuted: 'Clarity before every line of code.',
+      sub: 'Three pillars. One agreement. Before we start, we align on the rules for the next 45 minutes.',
+      cards: [
+        { title: '01 / The Reset', subtitle: 'The Admission', text: 'Last time we buried you in tech details. That was our mistake. Today we do the opposite: we reduce complexity to zero and speak only about your daily reality.' },
+        { title: '02 / The Structure', subtitle: 'The Rules', text: 'We will now walk through your visualized patient journey and role distribution together. Our goal today is a clear “yes” or “no” to this structure.' },
+        { title: '03 / The Commitment', subtitle: 'The Goal', text: 'If we are 100% aligned at the end, we lay the foundation for commercial execution and start delivery immediately.' },
+      ],
+      agreement: 'Activate agreement: Click for micro commitment',
+      agreementLocked: 'Agreement activated · the next 45 minutes belong to your vision',
+      hint: 'One click seals the frame — non-binding, but binding in spirit',
+    },
+    architecture: {
+      sectionLabel: 'The clinic’s digital operating system',
+      panelTitle: 'Agentic OS · Live role view',
+      typeLegend: ['Manual', 'Skill', 'Routine', 'Agent'],
+      roleSectionLabel: 'Choose a role — the architecture adapts live',
+      conductorTitle: 'The Orchestrator',
+      conductorSub: 'Routes every task to the right agent',
+      automationLabel: 'Automation Layer · When what runs',
+      triggers: ['on-demand · user trigger', 'scheduled · cron', 'on-event · phone · email · result', 'long-running · treatment', 'on-threshold · stock · vitals'],
+      integrationsLabel: 'Tools · Integrations · Software assets',
+      branchSubs: {
+        crm: 'Reception',
+        sched: 'Scheduling',
+        ehr: 'Patient record',
+        phys: 'Physician',
+        lab: 'LIS',
+        treat: 'Apheresis',
+        fin: 'ERP',
+        comp: 'GDPR · Audit',
+        inv: 'Inventory',
+        bi: 'BI · Learning',
+      },
+      colLockText: 'Locked',
+    },
+    journey: {
+      sectionLabel: 'Patient Journey',
+      title: 'How the agents collaborate',
+      stepLabels: { backend: 'Backend · What happens in the system', frontend: 'Frontend · What the user sees', stepPrefix: 'Step', activeAgents: 'Active agents:' },
+      steps: [
+        { num:1, name:'First contact', agents:['Onboarding Agent','Language Router','Lead Tracker'], backend:['Detects language & intent','Creates CRM record','Classifies request'], frontend:['Multilingual form','WhatsApp/Email integration','Instant confirmation'] },
+        { num:2, name:'Appointment prep', agents:['Appointment Agent','EHR Agent','Anamnesis Agent'], backend:['Finds suitable slot','Sends forms digitally','Requests prior records'], frontend:['Patient portal with forms','GDPR-compliant consent','Upload function'] },
+        { num:3, name:'Check-in', agents:['EHR Agent','Consent Manager'], backend:['Verifies identity','Consolidates digital record','Activates treatment workflow'], frontend:['Self check-in on tablet','Photo verification','Status overview'] },
+        { num:4, name:'Doctor consultation', agents:['Indication Agent','Research Agent','Therapy Planner'], backend:['Finds 12 similar cases','Fetches relevant studies','Proposes therapy'], frontend:['Doctor dashboard with suggestions','Source links to studies','One-click decision'] },
+        { num:5, name:'Diagnostics / lab', agents:['Lab Order Agent','Result Interpreter','Sample Tracking'], backend:['Creates lab order','Tracks sample status','Evaluates findings automatically'], frontend:['One-click order','Push on arrival','Visualized anomalies'] },
+        { num:6, name:'Treatment', agents:['Cocktail Designer','Side-Effect Watch','Protocol Writer','Machine Conductor'], backend:['Suggests cocktail recipe','Live vital monitoring','Early warning on tetany risk'], frontend:['Treatment room display','Push warning on risk','Protocol written live'] },
+        { num:7, name:'Billing & report', agents:['Billing Agent','KPI Calculator','Protocol Writer'], backend:['Records services','Generates invoice & doctor letter','Tracks payment status'], frontend:['Invoice preview','AI draft report','Payment status visible'] },
+        { num:8, name:'Aftercare', agents:['Insights Agent','Learning Agent','Outcome Tracker'], backend:['Automatic check-ins','Captures outcome data','Detects patterns for learning system'], frontend:['Patient app with progress questions','Follow-up appointment suggestion','Weekly insights report'] },
+      ],
+    },
+    flow: {
+      sectionLabel: 'Data flow',
+      title: 'What happens when new patient data arrives',
+      stages: [
+        { label:'Intake', title:'Patient calls', desc:'“Hello, I have Lyme disease and want to do Vita Veresset.”' },
+        { label:'Orchestrator', title:'Routing', desc:'Recognizes first contact, indication, language choice. Activates onboarding agent.' },
+        { label:'Agents at work', title:'Parallel', desc:'Onboarding captures data, indication agent finds similar cases, research agent locates evidence.' },
+        { label:'Storage', title:'Structured', desc:'CRM entry, EHR record, appointment proposal, pre-indication for doctor — all automated.' },
+      ],
+    },
+    partnership: {
+      sectionLabel: 'Minutes 30–45 · The decisive question',
+      panelTitle: 'The partnership question',
+      eyebrow: 'No more pitch — your words.',
+      question: 'How do you envision a partnership?',
+      sub: 'Choose the dimensions that best describe your vision — we adapt accordingly.',
+      idle: 'Click the dimensions to shape your vision.',
+      dims: [
+        { num: '01 / Dimension', title: 'Technological co-creator', text: 'You are actively involved in architecture decisions. We build together, not just for you.' },
+        { num: '02 / Dimension', title: 'Revenue partner', text: 'Shared skin in the game — we split risk and upside on global licensing to third-party doctors.' },
+        { num: '03 / Dimension', title: 'Clear handover & ownership', text: 'Setup, build, then the system is yours. Full control, full independence.' },
+        { num: '04 / Dimension', title: 'Long-term innovation partner', text: 'Continuous development, joint iteration — the system grows with your clinic and vision.' },
+      ],
+    },
+    footer: {
+      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3',
+      right: 'Work Zero × Satter · For Jaqueline Orizabal & Laura',
+    },
+    accessSummary: '<strong>{full}</strong> modules with full access · <strong>{read}</strong> read only · <strong>{limited}</strong> limited · <strong>{none}</strong> blocked. Each role only sees what it truly needs — a license doctor never reaches ICM’s cocktail recipes or finance.',
+  },
+  es: {
+    pageTitle: 'ICM Intelligence — Agentic OS · Closing Workspace',
+    brandTag: 'Agentic OS · Closing Workspace',
+    statusText: 'Estado del motor: <strong>Listo para despliegue</strong>',
+    tabs: {
+      reset: { index: '01 / The Reset', label: 'El contrato inicial', sub: 'Minutos 0–5 · Fijar el marco' },
+      architecture: { index: '02 / The Architecture', label: 'El Agentic OS', sub: 'Minutos 5–30 · Roles, journey, flujo de datos' },
+      partnership: { index: '03 / The Partnership', label: 'La pregunta de asociación', sub: 'Minutos 30–45 · Vuestra visión' },
+    },
+    reset: {
+      eyebrow: 'Upfront Contract · Min 00–05',
+      headline: 'Extreme Ownership.',
+      headlineMuted: 'Claridad antes de cada línea de código.',
+      sub: 'Tres pilares. Un acuerdo. Antes de empezar, nos alineamos en las reglas para los próximos 45 minutos.',
+      cards: [
+        { title: '01 / El Reset', subtitle: 'La admisión', text: 'La última vez os saturamos con detalles técnicos. Fue nuestro error. Hoy hacemos lo contrario: reducimos la complejidad a cero y hablamos solo de vuestra rutina diaria.' },
+        { title: '02 / La Estructura', subtitle: 'Las reglas', text: 'Ahora recorremos juntos vuestro patient journey visualizado y la distribución de roles. Nuestro objetivo hoy es un claro “sí” o “no” a esta estructura.' },
+        { title: '03 / El Compromiso', subtitle: 'La meta', text: 'Si al final estamos 100 % alineados, sentamos las bases para la implementación comercial y arrancamos la delivery de inmediato.' },
+      ],
+      agreement: 'Activar acuerdo: haz clic para micro compromiso',
+      agreementLocked: 'Contrato inicial activado · Los próximos 45 minutos pertenecen a vuestra visión',
+      hint: 'Un clic sella el marco — no vinculante, pero vinculante en espíritu',
+    },
+    architecture: {
+      sectionLabel: 'El sistema operativo digital de la clínica',
+      panelTitle: 'Agentic OS · Vista de roles en vivo',
+      typeLegend: ['Manual', 'Habilidad', 'Rutina', 'Agente'],
+      roleSectionLabel: 'Elige un rol — la arquitectura se adapta en vivo',
+      conductorTitle: 'El orquestador',
+      conductorSub: 'Dirige cada tarea al agente correcto',
+      automationLabel: 'Capa de automatización · Cuándo se ejecuta qué',
+      triggers: ['a demanda · activador de usuario', 'programado · cron', 'al evento · teléfono · email · resultado', 'de larga duración · tratamiento', 'a umbral · stock · signos vitales'],
+      integrationsLabel: 'Herramientas · Integraciones · Activos de software',
+      branchSubs: {
+        crm: 'Recepción',
+        sched: 'Citas',
+        ehr: 'Historia clínica',
+        phys: 'Médico',
+        lab: 'LIS',
+        treat: 'Aferesis',
+        fin: 'ERP',
+        comp: 'RGPD · Auditoría',
+        inv: 'Material',
+        bi: 'BI · Aprendizaje',
+      },
+      colLockText: 'Bloqueado',
+    },
+    journey: {
+      sectionLabel: 'Patient Journey',
+      title: 'Cómo colaboran los agentes',
+      stepLabels: { backend: 'Backend · Lo que ocurre en el sistema', frontend: 'Frontend · Lo que ve el usuario', stepPrefix: 'Paso', activeAgents: 'Agentes activos:' },
+      steps: [
+        { num:1, name:'Primer contacto', agents:['Onboarding Agent','Language Router','Lead Tracker'], backend:['Detecta idioma e intención','Crea registro CRM','Clasifica la solicitud'], frontend:['Formulario multilingüe','Integración WhatsApp/Email','Confirmación instantánea'] },
+        { num:2, name:'Preparación de cita', agents:['Appointment Agent','EHR Agent','Anamnesis Agent'], backend:['Encuentra hueco adecuado','Envía formularios digitalmente','Solicita historiales previos'], frontend:['Portal paciente con formularios','Consentimiento GDPR','Función de carga'] },
+        { num:3, name:'Registro', agents:['EHR Agent','Consent Manager'], backend:['Verifica identidad','Consolida expediente digital','Activa flujo de tratamiento'], frontend:['Self check-in en tablet','Verificación por foto','Resumen de estado'] },
+        { num:4, name:'Consulta médica', agents:['Indication Agent','Research Agent','Therapy Planner'], backend:['Encuentra 12 casos similares','Recupera estudios relevantes','Propone terapia'], frontend:['Panel médico con sugerencias','Enlaces de fuentes a estudios','Decisión con un clic'] },
+        { num:5, name:'Diagnóstico / laboratorio', agents:['Lab Order Agent','Result Interpreter','Sample Tracking'], backend:['Crea orden de laboratorio','Rastrea estado de muestra','Evalúa resultados automáticamente'], frontend:['Orden con un clic','Push al recibir','Anomalías visualizadas'] },
+        { num:6, name:'Tratamiento', agents:['Cocktail Designer','Side-Effect Watch','Protocol Writer','Machine Conductor'], backend:['Sugiere receta de cóctel','Monitoreo vital en vivo','Alerta temprana de riesgo de tetania'], frontend:['Pantalla de sala de tratamiento','Alerta push en riesgo','Protocolo escrito en vivo'] },
+        { num:7, name:'Facturación e informe', agents:['Billing Agent','KPI Calculator','Protocol Writer'], backend:['Registra servicios','Genera factura y informe médico','Sigue el estado de pago'], frontend:['Vista previa de factura','Borrador AI del informe','Estado de pago visible'] },
+        { num:8, name:'Seguimiento', agents:['Insights Agent','Learning Agent','Outcome Tracker'], backend:['Check-ins automáticos','Captura datos de outcomes','Detecta patrones para el sistema de aprendizaje'], frontend:['App paciente con preguntas de evolución','Sugerencia de cita de seguimiento','Informe semanal de insights'] },
+      ],
+    },
+    flow: {
+      sectionLabel: 'Flujo de datos',
+      title: 'Qué ocurre cuando llegan nuevos datos de pacientes',
+      stages: [
+        { label:'Entrada', title:'Paciente llama', desc:'“Hola, tengo Lyme disease y quiero hacer Vita Veresset.”' },
+        { label:'Orquestador', title:'Routing', desc:'Reconoce primer contacto, indicación, elección de idioma. Activa el agente de onboarding.' },
+        { label:'Agentes trabajan', title:'Paralelo', desc:'Onboarding captura datos, el agente de indicación encuentra casos similares, el agente de investigación localiza evidencia.' },
+        { label:'Archivo', title:'Estructurado', desc:'Entrada en CRM, registro EHR, propuesta de cita, pre-indicación para el médico — todo automatizado.' },
+      ],
+    },
+    partnership: {
+      sectionLabel: 'Minutos 30–45 · La pregunta decisiva',
+      panelTitle: 'La pregunta de asociación',
+      eyebrow: 'No más pitch — vuestras palabras.',
+      question: '¿Cómo imagináis una asociación?',
+      sub: 'Elegid las dimensiones que mejor describan vuestra visión — nos adaptamos.',
+      idle: 'Haced clic en las dimensiones para dar forma a vuestra visión.',
+      dims: [
+        { num: '01 / Dimensión', title: 'Co-creador tecnológico', text: 'Participáis activamente en las decisiones de arquitectura. Construimos juntos, no solo para vosotros.' },
+        { num: '02 / Dimensión', title: 'Socio de ingresos', text: 'Skin in the game compartido — compartimos riesgo y beneficio en la licencia global a médicos externos.' },
+        { num: '03 / Dimensión', title: 'Entrega clara y propiedad', text: 'Setup, construcción, luego el sistema es vuestro. Control total, independencia total.' },
+        { num: '04 / Dimensión', title: 'Socio de innovación a largo plazo', text: 'Desarrollo continuo, iteración conjunta — el sistema crece con vuestra clínica y visión.' },
+      ],
+    },
+    footer: {
+      left: '<span class="footer-brand">ICM Intelligence</span> · Agentic OS · Closing Workspace v3',
+      right: 'Work Zero × Satter · Para Jaqueline Orizabal & Laura',
+    },
+    accessSummary: '<strong>{full}</strong> módulos con acceso completo · <strong>{read}</strong> solo lectura · <strong>{limited}</strong> limitado · <strong>{none}</strong> bloqueado. Cada rol ve únicamente lo que realmente necesita — un médico licenciado nunca accede a las recetas de cóctel de ICM ni a finanzas.',
+  },
+};
+
+const roleMeta = {
+  admin: {
+    de: { name: 'Admin', desc: 'Jackie & Laura · Vollzugriff' },
+    en: { name: 'Admin', desc: 'Jackie & Laura · Full access' },
+    es: { name: 'Admin', desc: 'Jackie & Laura · Acceso total' },
+  },
+  doctor: {
+    de: { name: 'Arzt', desc: 'ICM-Ärzte · Klinische Arbeit' },
+    en: { name: 'Doctor', desc: 'ICM doctors · Clinical work' },
+    es: { name: 'Médico', desc: 'Médicos ICM · Trabajo clínico' },
+  },
+  staff: {
+    de: { name: 'Assistenz', desc: 'MFA · Reception · Labor' },
+    en: { name: 'Staff', desc: 'Medical assistant · Reception · Lab' },
+    es: { name: 'Asistente', desc: 'Asistente médico · Recepción · Laboratorio' },
+  },
+  finance: {
+    de: { name: 'Finance', desc: 'Buchhaltung · Controlling' },
+    en: { name: 'Finance', desc: 'Accounting · Controlling' },
+    es: { name: 'Finanzas', desc: 'Contabilidad · Control' },
+  },
+  licensee: {
+    de: { name: 'Lizenz-Arzt', desc: 'Externe Praxis (z.B. Dr. Schwachen)' },
+    en: { name: 'License Doctor', desc: 'External practice (e.g. Dr. Schwachen)' },
+    es: { name: 'Médico licenciado', desc: 'Práctica externa (p.ej. Dr. Schwachen)' },
+  },
+};
+
+function applyLanguage() {
+  const lang = translations[currentLang];
+  document.documentElement.lang = currentLang;
+  document.title = lang.pageTitle || document.title;
+  document.getElementById('brandTag').textContent = lang.brandTag || document.getElementById('brandTag').textContent;
+
+  document.getElementById('statusText').innerHTML = lang.statusText;
+  document.getElementById('tabResetIndex').textContent = lang.tabs.reset.index;
+  document.getElementById('tabResetLabel').textContent = lang.tabs.reset.label;
+  document.getElementById('tabResetSub').textContent = lang.tabs.reset.sub;
+  document.getElementById('tabArchitectureIndex').textContent = lang.tabs.architecture.index;
+  document.getElementById('tabArchitectureLabel').textContent = lang.tabs.architecture.label;
+  document.getElementById('tabArchitectureSub').textContent = lang.tabs.architecture.sub;
+  document.getElementById('tabPartnershipIndex').textContent = lang.tabs.partnership.index;
+  document.getElementById('tabPartnershipLabel').textContent = lang.tabs.partnership.label;
+  document.getElementById('tabPartnershipSub').textContent = lang.tabs.partnership.sub;
+
+  document.getElementById('resetEyebrow').textContent = lang.reset.eyebrow;
+  document.getElementById('resetHeadline').childNodes[0].nodeValue = lang.reset.headline + ' ';
+  document.getElementById('resetHeadlineMuted').textContent = lang.reset.headlineMuted;
+  document.getElementById('resetSub').textContent = lang.reset.sub;
+  document.getElementById('card1Title').textContent = lang.reset.cards[0].title;
+  document.getElementById('card1Subtitle').textContent = lang.reset.cards[0].subtitle;
+  document.getElementById('card1Text').textContent = lang.reset.cards[0].text;
+  document.getElementById('card2Title').textContent = lang.reset.cards[1].title;
+  document.getElementById('card2Subtitle').textContent = lang.reset.cards[1].subtitle;
+  document.getElementById('card2Text').textContent = lang.reset.cards[1].text;
+  document.getElementById('card3Title').textContent = lang.reset.cards[2].title;
+  document.getElementById('card3Subtitle').textContent = lang.reset.cards[2].subtitle;
+  document.getElementById('card3Text').textContent = lang.reset.cards[2].text;
+  document.getElementById('agText').textContent = lang.reset.agreement;
+  document.getElementById('agreementHint').textContent = lang.reset.hint;
+
+  document.getElementById('architectureSectionLabel').textContent = lang.architecture.sectionLabel;
+  document.getElementById('architecturePanelTitle').textContent = lang.architecture.panelTitle;
+  document.getElementById('typeManual').childNodes[1].nodeValue = lang.architecture.typeLegend[0];
+  document.getElementById('typeSkill').childNodes[1].nodeValue = lang.architecture.typeLegend[1];
+  document.getElementById('typeRoutine').childNodes[1].nodeValue = lang.architecture.typeLegend[2];
+  document.getElementById('typeAgent').childNodes[1].nodeValue = lang.architecture.typeLegend[3];
+  document.getElementById('roleSectionLabel').textContent = lang.architecture.roleSectionLabel;
+  document.getElementById('conductorTitle').textContent = lang.architecture.conductorTitle;
+  document.getElementById('conductorSub').textContent = lang.architecture.conductorSub;
+  document.getElementById('automationLabel').textContent = lang.architecture.automationLabel;
+  document.getElementById('trigger1').textContent = lang.architecture.triggers[0];
+  document.getElementById('trigger2').textContent = lang.architecture.triggers[1];
+  document.getElementById('trigger3').textContent = lang.architecture.triggers[2];
+  document.getElementById('trigger4').textContent = lang.architecture.triggers[3];
+  document.getElementById('trigger5').textContent = lang.architecture.triggers[4];
+  document.getElementById('integrationsLabel').textContent = lang.architecture.integrationsLabel;
+
+  document.getElementById('journeySectionLabel').textContent = lang.journey.sectionLabel;
+  document.getElementById('journeyPanelTitle').textContent = lang.journey.title;
+  document.getElementById('flowSectionLabel').textContent = lang.flow.sectionLabel;
+  document.getElementById('flowPanelTitle').textContent = lang.flow.title;
+  document.getElementById('flow1Label').textContent = lang.flow.stages[0].label;
+  document.getElementById('flow1Title').textContent = lang.flow.stages[0].title;
+  document.getElementById('flow1Desc').textContent = lang.flow.stages[0].desc;
+  document.getElementById('flow2Label').textContent = lang.flow.stages[1].label;
+  document.getElementById('flow2Title').textContent = lang.flow.stages[1].title;
+  document.getElementById('flow2Desc').textContent = lang.flow.stages[1].desc;
+  document.getElementById('flow3Label').textContent = lang.flow.stages[2].label;
+  document.getElementById('flow3Title').textContent = lang.flow.stages[2].title;
+  document.getElementById('flow3Desc').textContent = lang.flow.stages[2].desc;
+  document.getElementById('flow4Label').textContent = lang.flow.stages[3].label;
+  document.getElementById('flow4Title').textContent = lang.flow.stages[3].title;
+  document.getElementById('flow4Desc').textContent = lang.flow.stages[3].desc;
+
+  document.getElementById('partnershipSectionLabel').textContent = lang.partnership.sectionLabel;
+  document.getElementById('partnershipPanelTitle').textContent = lang.partnership.panelTitle;
+  document.getElementById('partnershipEyebrow').textContent = lang.partnership.eyebrow;
+  document.getElementById('partnershipQuestion').textContent = lang.partnership.question;
+  document.getElementById('partnershipSub').textContent = lang.partnership.sub;
+  document.getElementById('visionIdle').textContent = lang.partnership.idle;
+  lang.partnership.dims.forEach(function(d, i) {
+    var n = i + 1;
+    var elNum = document.getElementById('dim' + n + 'Num');
+    var elTitle = document.getElementById('dim' + n + 'Title');
+    var elText = document.getElementById('dim' + n + 'Text');
+    if (elNum) elNum.textContent = d.num;
+    if (elTitle) elTitle.textContent = d.title;
+    if (elText) elText.textContent = d.text;
+  });
+  renderVisionReadout();
+  document.getElementById('footerLeft').innerHTML = lang.footer.left;
+  document.getElementById('footerRight').textContent = lang.footer.right;
+
+  const activeLangButton = document.querySelector('.lang-btn.active');
+  if (activeLangButton) activeLangButton.classList.remove('active');
+  const newLangButton = document.querySelector(`.lang-btn[data-lang="${currentLang}"]`);
+  if (newLangButton) newLangButton.classList.add('active');
+
+  const counts = { full:0, read:0, limited:0, none:0 };
+  branches.forEach(b => counts[roles[currentRole].access[b.id] || 'none']++);
+  const readout = document.getElementById('accessReadout');
+  readout.style.setProperty('--role-color', roles[currentRole].color);
+  readout.innerHTML = lang.accessSummary.replace('{full}', counts.full).replace('{read}', counts.read).replace('{limited}', counts.limited).replace('{none}', counts.none);
+}
+
+const langButtons = document.querySelectorAll('.lang-btn');
+langButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentLang = btn.dataset.lang;
+    renderArchitecture();
+    applyLanguage();
+    renderRoles();
+    applyRole();
+    renderJourney();
+  });
+});
+
+function getTranslatedJourney() {
+  return translations[currentLang].journey.steps;
+}
+
+function getStepBlockLabels() {
+  return translations[currentLang].journey.stepLabels;
+}
+
 // ============================================================
 function renderArchitecture() {
   const headers = document.getElementById('branchHeaders');
   const grid = document.getElementById('systemGrid');
+  const branchSubs = translations[currentLang].architecture.branchSubs || {};
+  const colLockText = translations[currentLang].architecture.colLockText || 'Gesperrt';
 
   headers.innerHTML = branches.map(b => `
     <div class="branch-header" id="bh-${b.id}" style="--branch-color: ${b.color};">
       <span class="branch-badge" id="bb-${b.id}">F</span>
       <div class="branch-name">${b.name}</div>
-      <div class="branch-sub">${b.sub}</div>
+      <div class="branch-sub">${branchSubs[b.id] || b.sub}</div>
     </div>
   `).join('');
 
   grid.innerHTML = branches.map(b => `
     <div class="branch-column" id="bc-${b.id}" style="--branch-color: ${b.color};">
-      <div class="col-lock"><span class="col-lock-icon">🔒</span><span class="col-lock-text">Gesperrt</span></div>
+      <div class="col-lock"><span class="col-lock-icon">🔒</span><span class="col-lock-text">${colLockText}</span></div>
       ${b.caps.map(c => `
         <div class="capability" data-branch="${b.id}">
           <span class="capability-type ${c.type}"></span>
@@ -936,12 +1503,15 @@ function renderArchitecture() {
 // ============================================================
 function renderRoles() {
   const c = document.getElementById('roleSwitcher');
-  c.innerHTML = Object.entries(roles).map(([key, r]) => `
-    <button class="role-btn ${key === currentRole ? 'active' : ''}" data-role="${key}" style="--role-color: ${r.color}">
-      <div class="role-name">${r.name}</div>
-      <div class="role-desc">${r.desc}</div>
-    </button>
-  `).join('');
+  c.innerHTML = Object.entries(roles).map(([key, r]) => {
+    const meta = (roleMeta[key] && roleMeta[key][currentLang]) || { name: r.name, desc: r.desc };
+    return `
+      <button class="role-btn ${key === currentRole ? 'active' : ''}" data-role="${key}" style="--role-color: ${r.color}">
+        <div class="role-name">${meta.name}</div>
+        <div class="role-desc">${meta.desc}</div>
+      </button>
+    `;
+  }).join('');
   c.querySelectorAll('.role-btn').forEach(btn => {
     btn.addEventListener('click', () => { currentRole = btn.dataset.role; renderRoles(); applyRole(); });
   });
@@ -964,20 +1534,14 @@ function applyRole() {
     badge.textContent = ACCESS_BADGE[acc];
   });
 
-  // Access readout summary
+  const meta = (roleMeta[currentRole] && roleMeta[currentRole][currentLang]) || { name: r.name };
   const counts = { full:0, read:0, limited:0, none:0 };
   branches.forEach(b => counts[r.access[b.id] || 'none']++);
   const readout = document.getElementById('accessReadout');
   readout.style.setProperty('--role-color', r.color);
   readout.innerHTML = `
-    <span class="ar-role">${r.name}</span>
-    <span class="ar-text">
-      <strong>${counts.full}</strong> Module mit Vollzugriff ·
-      <strong>${counts.read}</strong> nur lesend ·
-      <strong>${counts.limited}</strong> eingeschränkt ·
-      <strong>${counts.none}</strong> gesperrt.
-      Jede Rolle sieht ausschließlich, was sie wirklich braucht — ein Lizenz-Arzt erreicht nie ICMs Cocktail-Rezepte oder Finanzen.
-    </span>
+    <span class="ar-role">${meta.name}</span>
+    <span class="ar-text">${translations[currentLang].accessSummary.replace('{full}', counts.full).replace('{read}', counts.read).replace('{limited}', counts.limited).replace('{none}', counts.none)}</span>
   `;
 }
 
@@ -986,7 +1550,8 @@ function applyRole() {
 // ============================================================
 function renderJourney() {
   const c = document.getElementById('journeySteps');
-  c.innerHTML = journey.map(s => `
+  const journeyItems = getTranslatedJourney();
+  c.innerHTML = journeyItems.map(s => `
     <div class="step ${s.num === currentStep ? 'active' : ''}" data-step="${s.num}">
       <div class="step-num">0${s.num}</div>
       <div class="step-name">${s.name}</div>
@@ -999,18 +1564,19 @@ function renderJourney() {
 }
 
 function renderStepDetail() {
-  const s = journey[currentStep - 1];
+  const s = getTranslatedJourney()[currentStep - 1];
+  const labels = getStepBlockLabels();
   document.getElementById('stepDetail').innerHTML = `
-    <div class="step-detail-eyebrow">Schritt 0${s.num}</div>
+    <div class="step-detail-eyebrow">${labels.stepPrefix} 0${s.num}</div>
     <div class="step-detail-title">${s.name}</div>
-    <div class="step-agents">Aktive Agents: <span>${s.agents.join(' · ')}</span></div>
+    <div class="step-agents">${labels.activeAgents} <span>${s.agents.join(' · ')}</span></div>
     <div class="step-detail-content">
       <div class="step-block">
-        <div class="step-block-title">Backend · Was im System passiert</div>
+        <div class="step-block-title">${labels.backend}</div>
         <ul>${s.backend.map(b => `<li>${b}</li>`).join('')}</ul>
       </div>
       <div class="step-block">
-        <div class="step-block-title">Frontend · Was der Nutzer sieht</div>
+        <div class="step-block-title">${labels.frontend}</div>
         <ul>${s.frontend.map(f => `<li>${f}</li>`).join('')}</ul>
       </div>
     </div>
@@ -1042,17 +1608,93 @@ agreementBtn.addEventListener('click', () => {
   agreementBtn.classList.add('locked');
   agreementBtn.setAttribute('aria-pressed', 'true');
   document.getElementById('agIcon').textContent = '✓';
-  document.getElementById('agText').textContent = 'Upfront Contract eingeloggt · Die nächsten 45 Minuten gehören eurer Vision';
+  document.getElementById('agText').textContent = translations[currentLang].reset.agreementLocked || 'Upfront Contract eingeloggt · Die nächsten 45 Minuten gehören eurer Vision';
   const hint = document.getElementById('agreementHint');
   if (hint) hint.style.opacity = '0';
   setTimeout(() => switchView('architecture'), 2000);
 });
 
 // ============================================================
+// LOGIN
+// ============================================================
+(function() {
+  const overlay = document.getElementById('loginOverlay');
+  const userInput = document.getElementById('loginUser');
+  const passInput = document.getElementById('loginPass');
+  const errorEl = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+
+  function attempt() {
+    const u = userInput.value;
+    const p = passInput.value;
+    if (u === 'ICM!!++890' && p === 'xP!+!!#hUp') {
+      overlay.classList.add('fade-out');
+      overlay.addEventListener('animationend', () => overlay.remove(), { once: true });
+    } else {
+      errorEl.textContent = 'Ungültige Zugangsdaten.';
+      userInput.classList.add('error');
+      passInput.classList.add('error');
+      passInput.value = '';
+      setTimeout(() => {
+        userInput.classList.remove('error');
+        passInput.classList.remove('error');
+        errorEl.textContent = '';
+      }, 2200);
+    }
+  }
+
+  btn.addEventListener('click', attempt);
+  [userInput, passInput].forEach(el => {
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+  });
+
+  userInput.focus();
+})();
+
+// ============================================================
+// PARTNERSHIP — DIMENSION TOGGLE
+// ============================================================
+const selectedDims = new Set();
+
+function toggleDimension(btn, idx) {
+  if (selectedDims.has(idx)) {
+    selectedDims.delete(idx);
+    btn.classList.remove('selected');
+  } else {
+    selectedDims.add(idx);
+    btn.classList.add('selected');
+  }
+  renderVisionReadout();
+}
+
+function renderVisionReadout() {
+  const readout = document.getElementById('visionReadout');
+  const idle = document.getElementById('visionIdle');
+  if (!readout) return;
+  Array.from(readout.querySelectorAll('.vision-tag')).forEach(t => t.remove());
+  if (selectedDims.size === 0) {
+    if (idle) idle.style.display = '';
+    readout.classList.remove('has-selection');
+  } else {
+    if (idle) idle.style.display = 'none';
+    readout.classList.add('has-selection');
+    const lang = translations[currentLang].partnership;
+    selectedDims.forEach(idx => {
+      const dim = lang.dims[idx - 1];
+      const tag = document.createElement('span');
+      tag.className = 'vision-tag';
+      tag.textContent = dim.title;
+      readout.appendChild(tag);
+    });
+  }
+}
+
+// ============================================================
 // INIT
 // ============================================================
 renderArchitecture();
 renderRoles();
+applyLanguage();
 applyRole();
 renderJourney();
 </script>
